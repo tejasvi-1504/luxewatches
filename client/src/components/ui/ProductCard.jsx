@@ -1,89 +1,126 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Heart, Star, Eye } from 'lucide-react';
+import { ShoppingBag, Heart, Star } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 
 export default function ProductCard({ product, index = 0 }) {
   const { addToCart } = useCart();
+  const ref = useRef(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 });
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const handleMouseLeave = () => { x.set(0); y.set(0); };
 
   const handleAdd = (e) => {
     e.preventDefault();
     addToCart(product);
-    toast.success('Added to cart', { style: { background: '#111', color: '#C9A84C', border: '1px solid #C9A84C33' } });
+    toast.success('Added to cart', {
+      style: { background: '#111', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' },
+      iconTheme: { primary: '#C9A84C', secondary: '#000' },
+    });
   };
 
   const discount = product.discount || (product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
+      transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true }}
-      className="group relative"
+      className="group"
+      style={{ perspective: 1000 }}
     >
       <Link to={`/product/${product.slug}`} className="block">
-        <div className="relative overflow-hidden rounded-lg bg-[#111] aspect-square">
-          <img
+        <motion.div
+          ref={ref}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+          className="relative overflow-hidden rounded-xl bg-[#111] aspect-[3/4]"
+        >
+          {/* Image */}
+          <motion.img
             src={product.images?.[0]?.url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800'}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+
+          {/* Shine effect */}
+          <motion.div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{
+              background: 'linear-gradient(105deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%)',
+            }}
+          />
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
             {product.isNewArrival && (
-              <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 bg-[#C9A84C] text-black font-semibold">New</span>
+              <motion.span initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: index * 0.07 + 0.3 }}
+                className="text-[9px] tracking-[0.2em] uppercase px-2.5 py-1 bg-[#C9A84C] text-black font-bold">
+                New
+              </motion.span>
             )}
             {product.isBestseller && (
-              <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 glass text-[#C9A84C]">Best Seller</span>
+              <span className="text-[9px] tracking-[0.2em] uppercase px-2.5 py-1 bg-white/10 backdrop-blur-sm text-white border border-white/20">
+                Best Seller
+              </span>
             )}
             {discount > 0 && (
-              <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 bg-red-500/80 text-white">-{discount}%</span>
+              <span className="text-[9px] tracking-[0.2em] uppercase px-2.5 py-1 bg-red-500 text-white font-bold">
+                -{discount}%
+              </span>
             )}
           </div>
 
-          {/* Actions */}
-          <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-            <button className="w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-[#C9A84C] transition-colors">
-              <Heart size={14} />
-            </button>
-            <button className="w-8 h-8 glass rounded-full flex items-center justify-center text-white hover:text-[#C9A84C] transition-colors">
-              <Eye size={14} />
-            </button>
-          </div>
-
-          {/* Quick Add */}
-          <button
-            onClick={handleAdd}
-            className="absolute bottom-3 left-3 right-3 py-2 bg-[#C9A84C] text-black text-xs font-semibold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-3 group-hover:translate-y-0 hover:bg-[#E8C97A]"
-          >
-            Quick Add
+          {/* Wishlist */}
+          <button onClick={e => e.preventDefault()} className="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white/60 hover:text-red-400 hover:bg-black/60 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
+            <Heart size={13} />
           </button>
-        </div>
 
-        <div className="mt-3 space-y-1">
-          <p className="text-[10px] tracking-widest uppercase text-white/30">{product.brand}</p>
-          <h3 className="text-sm font-medium text-white/85 line-clamp-1 group-hover:text-[#C9A84C] transition-colors">{product.name}</h3>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-[#C9A84C] font-semibold">₹{product.price?.toLocaleString()}</span>
-              {product.originalPrice && (
-                <span className="text-white/25 text-xs line-through">₹{product.originalPrice?.toLocaleString()}</span>
+          {/* Bottom info overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
+            <p className="text-[9px] tracking-[0.3em] uppercase text-[#C9A84C]/80 mb-1">{product.brand}</p>
+            <h3 className="text-white font-medium text-sm leading-tight line-clamp-1 mb-2">{product.name}</h3>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-[#C9A84C] font-bold">₹{product.price?.toLocaleString()}</span>
+                {product.originalPrice && (
+                  <span className="text-white/30 text-xs line-through">₹{product.originalPrice?.toLocaleString()}</span>
+                )}
+              </div>
+              {product.rating > 0 && (
+                <div className="flex items-center gap-1">
+                  <Star size={9} className="fill-[#C9A84C] text-[#C9A84C]" />
+                  <span className="text-[9px] text-white/50">{product.rating}</span>
+                </div>
               )}
             </div>
-            {product.rating > 0 && (
-              <div className="flex items-center gap-1">
-                <Star size={10} className="fill-[#C9A84C] text-[#C9A84C]" />
-                <span className="text-[10px] text-white/40">{product.rating} ({product.numReviews})</span>
-              </div>
-            )}
           </div>
-        </div>
+
+          {/* Quick Add — slides up on hover */}
+          <motion.button
+            onClick={handleAdd}
+            className="absolute bottom-0 left-0 right-0 py-3 bg-[#C9A84C] text-black text-xs font-bold tracking-[0.2em] uppercase flex items-center justify-center gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out hover:bg-[#E8C97A]"
+          >
+            <ShoppingBag size={13} /> Add to Cart
+          </motion.button>
+        </motion.div>
       </Link>
     </motion.div>
   );
