@@ -49,7 +49,7 @@ export default function Checkout() {
   );
 
   return (
-    <div className="min-h-screen pt-24 pb-16 max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen pt-28 pb-16 max-w-7xl mx-auto px-4 sm:px-6">
       <h1 className="text-3xl font-light text-white mb-8">Checkout</h1>
       <div className="grid lg:grid-cols-3 gap-10">
         {/* Form */}

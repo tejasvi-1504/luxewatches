@@ -59,7 +59,7 @@ export default function ProductDetail() {
   const discount = product.discount || (product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0);
 
   return (
-    <div className="min-h-screen pt-24 pb-20">
+    <div className="min-h-screen pt-24 sm:pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-white/30 mb-8 tracking-widest uppercase">
@@ -70,7 +70,7 @@ export default function ProductDetail() {
           <span className="text-white/60">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 sm:mb-20">
           {/* Images */}
           <div className="space-y-4">
             <div className="relative rounded-xl overflow-hidden bg-[#111] aspect-square">

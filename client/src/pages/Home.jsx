@@ -102,72 +102,63 @@ export default function Home() {
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="max-w-3xl">
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-20 sm:pt-0">
+          <div className="max-w-2xl">
             {/* Label */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="flex items-center gap-3 mb-8">
-              <div className="h-px w-10 bg-[#C9A84C]" />
-              <span className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase">Premium Inspired Collection</span>
+              className="flex items-center gap-3 mb-6 sm:mb-8">
+              <div className="h-px w-8 bg-[#C9A84C]" />
+              <span className="text-[#C9A84C] text-[10px] tracking-[0.35em] uppercase">Premium Inspired Collection</span>
             </motion.div>
 
             {/* Headline */}
-            <div className="overflow-hidden mb-3">
-              <motion.h1
-                initial={{ y: 120, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+            <div className="overflow-hidden mb-2">
+              <motion.h1 initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="text-6xl sm:text-7xl lg:text-8xl font-light text-white leading-[0.95] tracking-tight"
-              >
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.0] tracking-tight">
                 Wear What
               </motion.h1>
             </div>
-            <div className="overflow-hidden mb-3">
-              <motion.h1
-                initial={{ y: 120, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="text-6xl sm:text-7xl lg:text-8xl font-semibold leading-[0.95] tracking-tight"
-                style={{ background: 'linear-gradient(135deg, #C9A84C 0%, #F5E6C8 50%, #C9A84C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-              >
+            <div className="overflow-hidden mb-2">
+              <motion.h1 initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.0] tracking-tight"
+                style={{ background: 'linear-gradient(135deg, #C9A84C 0%, #F5E6C8 50%, #C9A84C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 The World
               </motion.h1>
             </div>
-            <div className="overflow-hidden mb-10">
-              <motion.h1
-                initial={{ y: 120, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="text-6xl sm:text-7xl lg:text-8xl font-light text-white leading-[0.95] tracking-tight"
-              >
+            <div className="overflow-hidden mb-7 sm:mb-10">
+              <motion.h1 initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.64, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.0] tracking-tight">
                 Admires
               </motion.h1>
             </div>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}
-              className="text-white/40 text-lg max-w-md leading-relaxed mb-10">
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }}
+              className="text-white/40 text-sm sm:text-base max-w-sm leading-relaxed mb-7 sm:mb-10">
               Curated replicas of the world's finest timepieces and fashion pieces — crafted for those who appreciate the extraordinary.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
-              className="flex flex-wrap gap-4">
-              <Link to="/shop" className="group relative overflow-hidden flex items-center gap-3 px-8 py-4 bg-[#C9A84C] text-black font-bold tracking-[0.2em] uppercase text-sm">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.0 }}
+              className="flex flex-wrap gap-3">
+              <Link to="/shop" className="group relative overflow-hidden flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#C9A84C] text-black font-bold tracking-[0.15em] uppercase text-xs sm:text-sm">
                 <motion.div className="absolute inset-0 bg-[#E8C97A]" initial={{ x: '-100%' }} whileHover={{ x: 0 }} transition={{ duration: 0.3 }} />
                 <span className="relative">Explore Collection</span>
-                <ArrowRight size={16} className="relative group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={14} className="relative group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/shop?gender=women" className="flex items-center gap-3 px-8 py-4 border border-white/15 text-white/60 tracking-[0.2em] uppercase text-sm hover:border-[#C9A84C]/50 hover:text-[#C9A84C] transition-all duration-300">
+              <Link to="/shop?gender=women" className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-white/15 text-white/55 tracking-[0.15em] uppercase text-xs sm:text-sm hover:border-[#C9A84C]/50 hover:text-[#C9A84C] transition-all duration-300">
                 Women's Edit
               </Link>
             </motion.div>
 
             {/* Stats */}
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
-              className="grid grid-cols-3 gap-8 mt-16 pt-10 border-t border-white/8 max-w-sm">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }}
+              className="flex gap-8 mt-10 sm:mt-14 pt-8 border-t border-white/8">
               {[['50K+', 'Customers'], ['500+', 'Designs'], ['99%', 'Satisfied']].map(([v, l]) => (
                 <div key={l}>
-                  <p className="text-2xl font-bold" style={{ background: 'linear-gradient(135deg, #C9A84C, #F5E6C8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{v}</p>
-                  <p className="text-white/30 text-xs tracking-widest uppercase mt-0.5">{l}</p>
+                  <p className="text-xl sm:text-2xl font-bold" style={{ background: 'linear-gradient(135deg, #C9A84C, #F5E6C8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{v}</p>
+                  <p className="text-white/30 text-[10px] tracking-widest uppercase mt-0.5">{l}</p>
                 </div>
               ))}
             </motion.div>
@@ -198,7 +189,7 @@ export default function Home() {
       </div>
 
       {/* ── CATEGORY GRID ── */}
-      <section className="py-24 max-w-7xl mx-auto px-6">
+      <section className="py-14 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-end justify-between mb-14">
           <div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
@@ -212,13 +203,13 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[280px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4" style={{ gridAutoRows: '220px' }}>
           {CATEGORIES.map((cat, i) => (
             <motion.div key={cat.label}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className={`${cat.span} ${i === 0 ? 'row-span-2' : ''}`}
+              className={i === 0 ? 'row-span-2' : ''}
             >
               <Link to={cat.href} className="group relative block w-full h-full rounded-2xl overflow-hidden">
                 <motion.img src={cat.img} alt={cat.label}
@@ -243,8 +234,8 @@ export default function Home() {
       </section>
 
       {/* ── FEATURED PRODUCTS ── */}
-      <section className="py-16 max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-14">
+      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-end justify-between mb-10 sm:mb-14">
           <div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase mb-3">Handpicked</motion.p>
@@ -256,7 +247,7 @@ export default function Home() {
             View All <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
           {featured.map((p, i) => <ProductCard key={p._id} product={p} index={i} />)}
         </div>
       </section>
@@ -320,8 +311,8 @@ export default function Home() {
       </section>
 
       {/* ── NEW ARRIVALS STRIP ── */}
-      <section className="py-16 max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-14">
+      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-end justify-between mb-10 sm:mb-14">
           <div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase mb-3">Just Landed</motion.p>
@@ -333,14 +324,14 @@ export default function Home() {
             View All <ArrowUpRight size={12} />
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
           {featured.slice(0, 4).map((p, i) => <ProductCard key={p._id + 'n'} product={p} index={i} />)}
         </div>
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-20 bg-[#0a0a0a] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-14 sm:py-20 bg-[#0a0a0a] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase mb-3">Customer Stories</motion.p>

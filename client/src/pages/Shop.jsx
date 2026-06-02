@@ -70,7 +70,7 @@ export default function Shop() {
   const activeFilters = [gender, type, minPrice].filter(Boolean).length;
 
   return (
-    <div className="min-h-screen pt-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen pt-28 sm:pt-28 pb-16 max-w-7xl mx-auto px-4 sm:px-6">
       {/* Header */}
       <div className="mb-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -89,18 +89,15 @@ export default function Shop() {
           Filters {activeFilters > 0 && <span className="bg-[#C9A84C] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">{activeFilters}</span>}
         </button>
 
-        <div className="flex items-center gap-3">
-          {/* Gender pills */}
+        <div className="flex items-center gap-2 flex-wrap">
           {['men', 'women'].map(g => (
             <button key={g} onClick={() => setParam('gender', gender === g ? '' : g)}
-              className={`text-xs tracking-widest uppercase px-4 py-2 rounded-full transition-all ${gender === g ? 'bg-[#C9A84C] text-black' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
+              className={`text-[10px] tracking-widest uppercase px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all ${gender === g ? 'bg-[#C9A84C] text-black font-bold' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
               {g}
             </button>
           ))}
-
-          {/* Sort */}
           <select value={sort} onChange={e => setParam('sort', e.target.value)}
-            className="glass text-white/70 text-xs tracking-widest uppercase px-4 py-2 rounded-lg bg-transparent outline-none cursor-pointer">
+            className="glass text-white/60 text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-lg bg-[#111] outline-none cursor-pointer border border-white/10">
             {SORT_OPTIONS.map(o => <option key={o.value} value={o.value} className="bg-[#111]">{o.label}</option>)}
           </select>
         </div>
@@ -176,7 +173,7 @@ export default function Shop() {
               <button onClick={clearFilters} className="text-[#C9A84C] text-sm tracking-widest uppercase">Clear filters</button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
               {products.map((p, i) => <ProductCard key={p._id} product={p} index={i} />)}
             </div>
           )}

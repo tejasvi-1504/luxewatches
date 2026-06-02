@@ -56,7 +56,7 @@ export default function Account() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16 max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen pt-28 pb-16 max-w-7xl mx-auto px-4 sm:px-6">
       <div className="grid lg:grid-cols-4 gap-8">
         {/* Sidebar */}
         <div className="lg:col-span-1">

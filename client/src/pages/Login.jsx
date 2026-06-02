@@ -30,7 +30,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 pt-20 pb-10">
+    <div className="min-h-screen flex items-center justify-center px-4 pt-28 pb-10">
       {/* Background */}
       <div className="absolute inset-0">
         <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1920" alt="" className="w-full h-full object-cover opacity-5" />

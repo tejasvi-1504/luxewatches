@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Search, User, Menu, X, Heart, ChevronDown } from 'lucide-react';
+import { ShoppingBag, Search, User, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -34,12 +34,18 @@ export default function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [location]);
+  useEffect(() => { setMobileOpen(false); setSearchOpen(false); }, [location]);
+
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -53,49 +59,51 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'bg-black/95 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-5'
+          scrolled
+            ? 'bg-black/98 backdrop-blur-xl border-b border-white/8 py-3'
+            : 'bg-gradient-to-b from-black/70 to-transparent py-4'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full border border-[#C9A84C] flex items-center justify-center group-hover:bg-[#C9A84C] transition-colors duration-300">
-              <span className="text-[#C9A84C] group-hover:text-black text-xs font-bold transition-colors">LW</span>
+          <Link to="/" className="flex items-center gap-2 shrink-0 group">
+            <div className="w-7 h-7 rounded-full border border-[#C9A84C] flex items-center justify-center group-hover:bg-[#C9A84C] transition-colors duration-300">
+              <span className="text-[#C9A84C] group-hover:text-black text-[10px] font-bold transition-colors">LW</span>
             </div>
-            <span className="text-lg font-light tracking-[0.2em] uppercase text-white">
-              Luxe<span className="gold-text font-medium">Watches</span>
+            <span className="text-base font-light tracking-[0.15em] uppercase text-white hidden sm:block">
+              Luxe<span className="text-[#C9A84C] font-semibold">Watches</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {NAV_LINKS.map((link) => (
-              <div key={link.label} className="relative group"
+              <div key={link.label} className="relative"
                 onMouseEnter={() => setActiveDropdown(link.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <Link to={link.href} className="flex items-center gap-1 text-sm tracking-widest uppercase text-white/70 hover:text-[#C9A84C] transition-colors duration-300 py-2">
+                <Link to={link.href}
+                  className="flex items-center gap-1 text-xs tracking-[0.15em] uppercase text-white/65 hover:text-[#C9A84C] transition-colors duration-300 py-2">
                   {link.label}
-                  {link.sub && <ChevronDown size={12} className="transition-transform group-hover:rotate-180 duration-300" />}
+                  {link.sub && <ChevronDown size={11} className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''}`} />}
                 </Link>
                 {link.sub && (
                   <AnimatePresence>
                     {activeDropdown === link.label && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 glass rounded-lg min-w-[160px] overflow-hidden"
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18 }}
+                        className="absolute top-full left-0 mt-0 w-44 bg-black/98 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl"
                       >
                         {link.sub.map((sub) => (
                           <Link key={sub.label} to={sub.href}
-                            className="block px-4 py-2.5 text-xs tracking-widest uppercase text-white/60 hover:text-[#C9A84C] hover:bg-white/5 transition-all"
-                          >
+                            className="block px-4 py-2.5 text-[11px] tracking-[0.15em] uppercase text-white/55 hover:text-[#C9A84C] hover:bg-white/5 transition-all">
                             {sub.label}
                           </Link>
                         ))}
@@ -108,31 +116,24 @@ export default function Navbar() {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center gap-4">
-            <button onClick={() => setSearchOpen(true)} className="text-white/70 hover:text-[#C9A84C] transition-colors">
-              <Search size={18} />
+          <div className="flex items-center gap-3 sm:gap-4">
+            <button onClick={() => setSearchOpen(true)} className="text-white/65 hover:text-[#C9A84C] transition-colors p-1">
+              <Search size={17} />
             </button>
-            {user ? (
-              <div className="relative group">
-                <Link to={user.role === 'admin' ? '/admin' : '/account'} className="text-white/70 hover:text-[#C9A84C] transition-colors">
-                  <User size={18} />
-                </Link>
-              </div>
-            ) : (
-              <Link to="/login" className="text-white/70 hover:text-[#C9A84C] transition-colors">
-                <User size={18} />
-              </Link>
-            )}
-            <button onClick={() => setIsOpen(true)} className="relative text-white/70 hover:text-[#C9A84C] transition-colors">
-              <ShoppingBag size={18} />
+            <Link to={user ? (user.role === 'admin' ? '/admin' : '/account') : '/login'}
+              className="text-white/65 hover:text-[#C9A84C] transition-colors p-1">
+              <User size={17} />
+            </Link>
+            <button onClick={() => setIsOpen(true)} className="relative text-white/65 hover:text-[#C9A84C] transition-colors p-1">
+              <ShoppingBag size={17} />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#C9A84C] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {totalItems}
+                <span className="absolute -top-1 -right-1 bg-[#C9A84C] text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold leading-none">
+                  {totalItems > 9 ? '9+' : totalItems}
                 </span>
               )}
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-white/70 hover:text-[#C9A84C] transition-colors">
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-white/65 hover:text-[#C9A84C] transition-colors p-1">
+              {mobileOpen ? <X size={19} /> : <Menu size={19} />}
             </button>
           </div>
         </div>
@@ -141,78 +142,83 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
-            className="fixed inset-0 z-40 bg-black/98 backdrop-blur-xl pt-20 px-6 overflow-y-auto"
-          >
-            <div className="space-y-6">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div key={link.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}>
-                  <Link to={link.href} className="block text-2xl font-light tracking-widest uppercase text-white hover:text-[#C9A84C] transition-colors mb-2">
-                    {link.label}
-                  </Link>
-                  {link.sub && (
-                    <div className="ml-4 space-y-2">
-                      {link.sub.map(sub => (
-                        <Link key={sub.label} to={sub.href} className="block text-sm tracking-widest uppercase text-white/40 hover:text-[#C9A84C] transition-colors">
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-              <div className="pt-6 border-t border-white/10">
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+              className="fixed right-0 top-0 h-full w-[280px] bg-[#0a0a0a] border-l border-white/8 z-50 flex flex-col overflow-y-auto"
+            >
+              <div className="flex items-center justify-between p-5 border-b border-white/8">
+                <span className="text-sm font-light tracking-[0.2em] uppercase text-white">Menu</span>
+                <button onClick={() => setMobileOpen(false)} className="text-white/40 hover:text-white p-1"><X size={18} /></button>
+              </div>
+              <nav className="flex-1 p-5 space-y-1">
+                {NAV_LINKS.map((link, i) => (
+                  <motion.div key={link.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}>
+                    <Link to={link.href} className="block text-base font-light tracking-[0.1em] uppercase text-white hover:text-[#C9A84C] transition-colors py-3 border-b border-white/5">
+                      {link.label}
+                    </Link>
+                    {link.sub && (
+                      <div className="ml-3 mt-1 mb-2 space-y-1">
+                        {link.sub.map(sub => (
+                          <Link key={sub.label} to={sub.href} className="block text-xs tracking-[0.15em] uppercase text-white/35 hover:text-[#C9A84C] transition-colors py-1.5">
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </nav>
+              <div className="p-5 border-t border-white/8 space-y-3">
                 {user ? (
                   <>
-                    <Link to="/account" className="block text-lg text-white/70 hover:text-[#C9A84C] mb-3">My Account</Link>
-                    <button onClick={logout} className="text-lg text-white/70 hover:text-red-400">Logout</button>
+                    <Link to="/account" className="flex items-center gap-2 text-sm text-white/60 hover:text-[#C9A84C] transition-colors">
+                      <User size={15} /> My Account
+                    </Link>
+                    <button onClick={logout} className="flex items-center gap-2 text-sm text-white/40 hover:text-red-400 transition-colors">
+                      Logout
+                    </button>
                   </>
                 ) : (
-                  <Link to="/login" className="block text-lg text-white/70 hover:text-[#C9A84C]">Login / Register</Link>
+                  <Link to="/login" className="block text-center py-3 bg-[#C9A84C] text-black text-xs font-bold tracking-[0.2em] uppercase rounded-lg">
+                    Sign In
+                  </Link>
                 )}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
       {/* Search Overlay */}
       <AnimatePresence>
         {searchOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center px-6"
             onClick={() => setSearchOpen(false)}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="w-full max-w-2xl"
-              onClick={e => e.stopPropagation()}
-            >
+            <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }}
+              className="w-full max-w-2xl" onClick={e => e.stopPropagation()}>
+              <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] mb-6 text-center">Search Collection</p>
               <form onSubmit={handleSearch} className="relative">
-                <input
-                  autoFocus
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search watches, bags, brands..."
-                  className="w-full bg-transparent border-b-2 border-[#C9A84C] text-white text-2xl pb-3 pr-12 outline-none placeholder-white/20 tracking-wide"
-                />
-                <button type="submit" className="absolute right-0 bottom-3 text-[#C9A84C]">
-                  <Search size={24} />
+                <input autoFocus value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                  placeholder="Rolex, Chanel, Bags..."
+                  className="w-full bg-transparent border-b-2 border-[#C9A84C] text-white text-2xl sm:text-3xl pb-3 pr-12 outline-none placeholder-white/15 tracking-wide" />
+                <button type="submit" className="absolute right-0 bottom-3 text-[#C9A84C] hover:text-white transition-colors">
+                  <Search size={22} />
                 </button>
               </form>
-              <button onClick={() => setSearchOpen(false)} className="absolute top-6 right-6 text-white/50 hover:text-white">
-                <X size={24} />
-              </button>
             </motion.div>
+            <button onClick={() => setSearchOpen(false)} className="absolute top-5 right-5 text-white/30 hover:text-white p-2">
+              <X size={22} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
