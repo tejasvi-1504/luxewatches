@@ -18,7 +18,7 @@ const HERO_SLIDES = [
     tag: "Men's Collection",
     title: 'Iconic',
     sub: 'Timepieces',
-    desc: 'Curated replicas of the world's finest watches — where precision meets accessibility.',
+    desc: "Curated replicas of the world's finest watches — where precision meets accessibility.",
     cta: '/shop?gender=men&type=watch',
   },
   {
