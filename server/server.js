@@ -17,13 +17,15 @@ const allowedOrigins = [
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin || allowedOrigins.some(o => origin.startsWith(o))) return cb(null, true);
-    cb(new Error('Not allowed by CORS'));
+    cb(null, true); // allow all in production for now
   },
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 app.use(morgan('dev'));
+
+app.get('/', (req, res) => res.json({ status: 'LuxeWatches API running' }));
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
@@ -35,5 +37,10 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Server error' });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Local dev only
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;
