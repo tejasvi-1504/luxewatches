@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -19,82 +19,208 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const user = isLogin ? await login(form.email, form.password) : await register(form.name, form.email, form.password);
-      toast.success(`Welcome${isLogin ? ' back' : ''}, ${user.name}!`, { style: { background: '#111', color: '#C9A84C', border: '1px solid #C9A84C33' } });
+      const user = isLogin
+        ? await login(form.email, form.password)
+        : await register(form.name, form.email, form.password);
+      toast.success(`Welcome${isLogin ? ' back' : ''}, ${user.name}!`, {
+        style: { background: '#0c0a07', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.2)' },
+      });
       navigate(user.role === 'admin' ? '/admin' : from, { replace: true });
     } catch (err) {
-      toast.error(err.message, { style: { background: '#111', color: '#ef4444' } });
+      toast.error(err.message, { style: { background: '#0c0a07', color: '#ef4444' } });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 pt-28 pb-10">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1920" alt="" className="w-full h-full object-cover opacity-5" />
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-[#111]" />
-      </div>
+    <div className="min-h-screen flex" style={{ background: '#080604' }}>
 
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full border border-[#C9A84C] flex items-center justify-center">
-              <span className="text-[#C9A84C] font-bold">LW</span>
-            </div>
-          </Link>
-          <h1 className="text-2xl font-light text-white mt-4">{isLogin ? 'Welcome Back' : 'Create Account'}</h1>
-          <p className="text-white/30 text-sm mt-1">{isLogin ? 'Sign in to your account' : 'Join the LuxeWatches family'}</p>
+      {/* Left Panel — luxury image (desktop only) */}
+      <div className="hidden lg:flex lg:w-[48%] relative overflow-hidden flex-col justify-between p-12">
+        <img
+          src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1200&q=95"
+          alt="Luxury Watch"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.35 }}
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(8,6,4,0.7) 0%, rgba(8,6,4,0.4) 60%, rgba(8,6,4,0.85) 100%)' }} />
+
+        {/* Animated grid lines */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+          {[20, 45, 70].map((top, i) => (
+            <motion.div key={i} className="absolute h-px w-full"
+              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)' }}
+              animate={{ x: ['-100%', '100%'] }}
+              transition={{ duration: 12 + i * 3, repeat: Infinity, ease: 'linear', delay: i * 2 }}
+            />
+          ))}
         </div>
 
-        <div className="glass rounded-2xl p-8">
-          {/* Tabs */}
-          <div className="flex mb-6 p-1 glass rounded-lg">
-            <button onClick={() => setIsLogin(true)} className={`flex-1 py-2 text-sm tracking-widest uppercase rounded transition-all ${isLogin ? 'bg-[#C9A84C] text-black font-semibold' : 'text-white/40 hover:text-white'}`}>
-              Login
-            </button>
-            <button onClick={() => setIsLogin(false)} className={`flex-1 py-2 text-sm tracking-widest uppercase rounded transition-all ${!isLogin ? 'bg-[#C9A84C] text-black font-semibold' : 'text-white/40 hover:text-white'}`}>
-              Register
-            </button>
+        {/* Logo */}
+        <Link to="/" className="relative z-10 flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{ border: '1px solid rgba(201,168,76,0.6)', background: 'rgba(201,168,76,0.08)' }}>
+            <span className="text-[9px] font-bold" style={{ color: '#C9A84C' }}>LW</span>
+          </div>
+          <span className="font-cormorant text-xl font-light tracking-[0.15em] uppercase text-white/80 group-hover:text-white transition-colors">
+            Luxe<span className="gold-text font-medium">Watches</span>
+          </span>
+        </Link>
+
+        {/* Center quote */}
+        <div className="relative z-10 max-w-sm">
+          <div className="mb-6">
+            <span className="font-cormorant text-7xl leading-none" style={{ color: 'rgba(201,168,76,0.25)' }}>"</span>
+          </div>
+          <p className="font-cormorant text-3xl sm:text-4xl font-light text-white leading-tight mb-6">
+            Precision is not just a skill —{' '}
+            <span className="gold-text font-medium italic">it's a luxury.</span>
+          </p>
+          <div className="h-px w-12 mb-5" style={{ background: 'linear-gradient(90deg, #C9A84C, transparent)' }} />
+          <p className="text-xs tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,223,0.35)' }}>
+            LuxeWatches — Est. 2024
+          </p>
+        </div>
+
+        {/* Bottom stats */}
+        <div className="relative z-10 flex gap-10">
+          {[['50K+', 'Customers'], ['500+', 'Designs'], ['4.9★', 'Rating']].map(([v, l]) => (
+            <div key={l}>
+              <p className="font-cormorant text-2xl gold-text font-medium">{v}</p>
+              <p className="text-[9px] tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,223,0.3)' }}>{l}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right Panel — form */}
+      <div className="flex-1 flex items-center justify-center px-6 py-12 lg:py-0 pt-28 lg:pt-0">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full max-w-md"
+        >
+          {/* Mobile logo */}
+          <Link to="/" className="lg:hidden flex items-center justify-center gap-2.5 mb-8 group">
+            <div className="w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ border: '1px solid rgba(201,168,76,0.5)', background: 'rgba(201,168,76,0.07)' }}>
+              <span className="text-[10px] font-bold" style={{ color: '#C9A84C' }}>LW</span>
+            </div>
+          </Link>
+
+          {/* Heading */}
+          <div className="mb-9">
+            <p className="text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: 'rgba(201,168,76,0.7)' }}>
+              — LuxeWatches
+            </p>
+            <h1 className="font-cormorant text-4xl sm:text-5xl font-light text-white leading-tight">
+              {isLogin ? (
+                <>Welcome<br /><span className="gold-text font-medium italic">Back.</span></>
+              ) : (
+                <>Create Your<br /><span className="gold-text font-medium italic">Account.</span></>
+              )}
+            </h1>
+            <p className="text-sm mt-3" style={{ color: 'rgba(237,232,223,0.35)' }}>
+              {isLogin ? 'Sign in to access your account' : 'Join the LuxeWatches family today'}
+            </p>
           </div>
 
+          {/* Tab switcher */}
+          <div className="flex mb-8 p-1 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            {['Login', 'Register'].map((tab, i) => (
+              <button key={tab} onClick={() => setIsLogin(i === 0)}
+                className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.25em] uppercase rounded-lg transition-all duration-300"
+                style={{
+                  background: (isLogin ? i === 0 : i === 1) ? 'linear-gradient(135deg, #C9A84C, #E8C97A)' : 'transparent',
+                  color: (isLogin ? i === 0 : i === 1) ? '#000' : 'rgba(237,232,223,0.35)',
+                }}>
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="relative">
-                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
-                <input type="text" placeholder="Full Name" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#C9A84C] transition-colors" />
-              </div>
-            )}
+            <AnimatePresence>
+              {!isLogin && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
+                  className="relative">
+                  <User size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+                  <input type="text" placeholder="Full Name" required value={form.name}
+                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                    className="w-full rounded-xl pl-11 pr-4 py-3.5 text-sm outline-none transition-all duration-300"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      color: '#EDE8DF',
+                      fontFamily: 'Inter',
+                    }}
+                    onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="relative">
-              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
-              <input type="email" placeholder="Email Address" required value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#C9A84C] transition-colors" />
+              <Mail size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+              <input type="email" placeholder="Email Address" required value={form.email}
+                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                className="w-full rounded-xl pl-11 pr-4 py-3.5 text-sm outline-none transition-all duration-300"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#EDE8DF' }}
+                onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+              />
             </div>
+
             <div className="relative">
-              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
-              <input type={showPwd ? 'text' : 'password'} placeholder="Password" required value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-10 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#C9A84C] transition-colors" />
-              <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70">
-                {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+              <Lock size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+              <input
+                type={showPwd ? 'text' : 'password'} placeholder="Password" required value={form.password}
+                onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+                className="w-full rounded-xl pl-11 pr-12 py-3.5 text-sm outline-none transition-all duration-300"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#EDE8DF' }}
+                onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+              />
+              <button type="button" onClick={() => setShowPwd(!showPwd)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
+                style={{ color: 'rgba(237,232,223,0.25)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'rgba(237,232,223,0.7)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.25)'}>
+                {showPwd ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
 
             <button type="submit" disabled={loading}
-              className="w-full py-3.5 bg-[#C9A84C] text-black font-semibold tracking-widest uppercase text-sm hover:bg-[#E8C97A] transition-colors disabled:opacity-50 rounded-lg">
-              {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
+              className="group relative overflow-hidden w-full py-4 text-black text-[10px] font-bold tracking-[0.3em] uppercase rounded-xl mt-2 flex items-center justify-center gap-2.5 transition-opacity disabled:opacity-50"
+              style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}>
+              <motion.div className="absolute inset-0 bg-white/15" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.55 }} />
+              <span className="relative">{loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}</span>
+              {!loading && <ArrowRight size={12} className="relative group-hover:translate-x-1 transition-transform" />}
             </button>
           </form>
 
           {isLogin && (
-            <p className="text-center text-xs text-white/30 mt-4">
-              Demo admin: <span className="text-[#C9A84C]">admin@luxewatches.com</span> / <span className="text-[#C9A84C]">admin123</span>
+            <p className="text-center text-[11px] mt-5" style={{ color: 'rgba(237,232,223,0.25)' }}>
+              Demo admin:{' '}
+              <span style={{ color: 'rgba(201,168,76,0.7)' }}>admin@luxewatches.com</span>
+              {' '}/ <span style={{ color: 'rgba(201,168,76,0.7)' }}>admin123</span>
             </p>
           )}
-        </div>
-      </motion.div>
+
+          <p className="text-center mt-6 text-xs" style={{ color: 'rgba(237,232,223,0.2)' }}>
+            {isLogin ? "Don't have an account? " : 'Already have an account? '}
+            <button onClick={() => setIsLogin(!isLogin)} className="transition-colors" style={{ color: '#C9A84C' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#E8C97A'}
+              onMouseLeave={e => e.currentTarget.style.color = '#C9A84C'}>
+              {isLogin ? 'Register' : 'Sign In'}
+            </button>
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 }
