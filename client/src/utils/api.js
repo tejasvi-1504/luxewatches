@@ -1,17 +1,10 @@
 import axios from 'axios';
 
-const BACKEND = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/api`
-  : (typeof window !== 'undefined' && window.location.hostname !== 'localhost')
-    ? 'https://luxewatches-theta.vercel.app/api'
-    : '/api';
+const raw = import.meta.env.VITE_API_URL || 'https://luxewatches-theta.vercel.app';
+const BASE = raw.replace(/\/$/, '') + '/api';
 
-const api = axios.create({
-  baseURL: BACKEND,
-  withCredentials: false,
-});
+const api = axios.create({ baseURL: BASE });
 
-// Attach stored JWT to every request
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('lw_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -20,10 +13,7 @@ api.interceptors.request.use(config => {
 
 api.interceptors.response.use(
   res => res,
-  err => {
-    const msg = err.response?.data?.message || 'Something went wrong';
-    return Promise.reject(new Error(msg));
-  }
+  err => Promise.reject(new Error(err.response?.data?.message || 'Something went wrong'))
 );
 
 export default api;
