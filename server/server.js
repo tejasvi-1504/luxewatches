@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
@@ -11,45 +9,38 @@ const app = express();
 
 app.use(cors({
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
 }));
-
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
-// Health check — no DB needed
-app.get('/', (req, res) => {
-  res.json({
-    status: 'LuxeWatches API running ✓',
-    db: !!process.env.MONGO_URI,
-    env: process.env.NODE_ENV,
-  });
+// Per-request DB ensure (cached after first connect)
+app.use(async (req, res, next) => {
+  if (req.path === '/') return next();
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(503).json({ message: 'Database connection failed', detail: err.message });
+  }
 });
 
-// Connect DB then mount routes
-connectDB()
-  .then(() => {
-    app.use('/api/auth', require('./routes/authRoutes'));
-    app.use('/api/products', require('./routes/productRoutes'));
-    app.use('/api/orders', require('./routes/orderRoutes'));
-    app.use('/api/categories', require('./routes/categoryRoutes'));
+app.get('/', (req, res) => res.json({ status: 'ok', db: !!process.env.MONGO_URI }));
 
-    app.use((err, req, res, next) => {
-      console.error(err.stack);
-      res.status(err.status || 500).json({ message: err.message || 'Server error' });
-    });
-  })
-  .catch(err => {
-    console.error('DB connection failed:', err.message);
-    app.use('/api', (req, res) => {
-      res.status(503).json({ message: 'Database unavailable', error: err.message });
-    });
-  });
+// Register routes synchronously
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
+
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(err.status || 500).json({ message: err.message || 'Server error' });
+});
 
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(process.env.PORT || 5000, () => console.log('Server on 5000'));
 }
 
 module.exports = app;
