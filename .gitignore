@@ -3,3 +3,6 @@ node_modules/
 dist/
 .DS_Store
 *.log
+# temp screenshots / scratch files
+client/_*.png
+_*.png
