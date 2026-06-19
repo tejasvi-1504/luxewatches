@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Search, User, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
+import Brand from '../ui/Brand';
 
 const NAV_LINKS = [
   { label: 'Men', href: '/shop?gender=men', sub: [
