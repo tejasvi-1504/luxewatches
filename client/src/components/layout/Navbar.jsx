@@ -7,20 +7,11 @@ import { useAuth } from '../../context/AuthContext';
 import Brand from '../ui/Brand';
 
 const NAV_LINKS = [
-  { label: 'Men', href: '/shop?gender=men', sub: [
-    { label: 'Watches', href: '/shop?gender=men&type=watch' },
-    { label: 'Bags', href: '/shop?gender=men&type=bag' },
-    { label: 'Accessories', href: '/shop?gender=men&type=accessory' },
-  ]},
-  { label: 'Women', href: '/shop?gender=women', sub: [
-    { label: 'Watches', href: '/shop?gender=women&type=watch' },
-    { label: 'Bags', href: '/shop?gender=women&type=bag' },
-    { label: 'Accessories', href: '/shop?gender=women&type=accessory' },
-    { label: 'Wallets', href: '/shop?gender=women&type=wallet' },
-    { label: 'Sunglasses', href: '/shop?gender=women&type=sunglasses' },
-  ]},
+  { label: "Men's Watches", href: '/shop?gender=men&type=watch' },
+  { label: "Women's Watches", href: '/shop?gender=women&type=watch' },
   { label: 'New Arrivals', href: '/shop?sort=newest' },
   { label: 'Best Sellers', href: '/shop?sort=popular' },
+  { label: 'All Timepieces', href: '/shop' },
 ];
 
 const TICKER_ITEMS = [
