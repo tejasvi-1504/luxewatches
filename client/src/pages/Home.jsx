@@ -253,7 +253,7 @@ export default function Home() {
             <motion.div key={activeHero}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.65 }}
-              className="max-w-3xl mx-auto flex flex-col items-center"
+              className="w-full max-w-3xl mx-auto flex flex-col"
             >
               {/* Eyebrow */}
               <motion.div className="flex items-center justify-center gap-3 mb-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
@@ -287,22 +287,22 @@ export default function Home() {
               </div>
 
               <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-                className="text-sm leading-relaxed mb-8 max-w-md mx-auto"
-                style={{ color: 'rgb(var(--ink-rgb)/0.5)', lineHeight: 1.85 }}>
+                className="text-sm leading-relaxed mb-8 mx-auto"
+                style={{ color: 'rgb(var(--ink-rgb)/0.5)', lineHeight: 1.85, width: '100%', maxWidth: 'min(28rem, 84vw)' }}>
                 {HERO_SLIDES[activeHero].desc}
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75 }}
-                className="flex flex-wrap gap-3 justify-center">
+                className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full max-w-sm sm:max-w-none mx-auto">
                 <Link to={HERO_SLIDES[activeHero].cta}
-                  className="group relative overflow-hidden flex items-center gap-2.5 px-8 py-3.5 text-black text-[10px] font-bold tracking-[0.22em] uppercase rounded-sm"
+                  className="group relative overflow-hidden flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-3.5 text-black text-[10px] font-bold tracking-[0.22em] uppercase rounded-sm"
                   style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))', boxShadow: '0 10px 40px rgb(var(--accent-rgb)/0.25)' }}>
                   <motion.div className="absolute inset-0 bg-white/30" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.55 }} />
                   <span className="relative">{HERO_SLIDES[activeHero].ctaLabel}</span>
                   <ArrowRight size={12} className="relative group-hover:translate-x-1.5 transition-transform duration-300" />
                 </Link>
                 <Link to="/shop"
-                  className="flex items-center gap-2.5 px-8 py-3.5 text-[10px] tracking-[0.22em] uppercase transition-all duration-300 rounded-sm"
+                  className="flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-3.5 text-[10px] tracking-[0.22em] uppercase transition-all duration-300 rounded-sm"
                   style={{ border: '1px solid rgba(255,255,255,0.14)', color: 'rgb(var(--ink-rgb)/0.6)' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--accent-rgb)/0.5)'; e.currentTarget.style.color = 'var(--accent)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)'; e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.6)'; }}>
@@ -314,7 +314,7 @@ export default function Home() {
 
           {/* Stats */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
-            className="flex gap-10 sm:gap-16 mt-12 sm:mt-14 pt-7 justify-center flex-wrap"
+            className="flex gap-8 sm:gap-16 mt-12 sm:mt-14 pt-7 justify-center flex-wrap w-full"
             style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
             {HERO_STATS.map((s, i) => (
               <div key={s.label} className="text-center">
