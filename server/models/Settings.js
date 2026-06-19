@@ -16,10 +16,13 @@ const settingsSchema = new mongoose.Schema({
 settingsSchema.statics.VALID_THEMES = VALID_THEMES;
 
 // Always work with a single shared document.
+// Atomic upsert avoids duplicate-key races across concurrent serverless cold starts.
 settingsSchema.statics.getSingleton = async function () {
-  let doc = await this.findOne({ key: 'site' });
-  if (!doc) doc = await this.create({ key: 'site' });
-  return doc;
+  return this.findOneAndUpdate(
+    { key: 'site' },
+    { $setOnInsert: { key: 'site' } },
+    { new: true, upsert: true, setDefaultsOnInsert: true }
+  );
 };
 
 module.exports = mongoose.model('Settings', settingsSchema);
