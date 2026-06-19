@@ -52,7 +52,7 @@ export default function AdminRefunds() {
                     <span className="text-[9px] px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded-full">Refund Requested</span>
                   </div>
                   <p className="text-white/50 text-xs">{order.user?.name} — {order.user?.email}</p>
-                  <p className="text-[#C9A84C] font-semibold mt-1">₹{order.totalPrice?.toLocaleString()}</p>
+                  <p className="text-[var(--accent)] font-semibold mt-1">₹{order.totalPrice?.toLocaleString()}</p>
                   {order.refundReason && (
                     <div className="mt-3 p-3 bg-white/5 rounded-lg">
                       <p className="text-[10px] tracking-widest uppercase text-white/30 mb-1">Reason</p>

@@ -3,9 +3,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSettings } from '../context/SettingsContext';
+import Brand from '../components/ui/Brand';
 import toast from 'react-hot-toast';
 
 export default function Login() {
+  const { brandName } = useSettings();
   const [isLogin, setIsLogin] = useState(true);
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,7 +26,7 @@ export default function Login() {
         ? await login(form.email, form.password)
         : await register(form.name, form.email, form.password);
       toast.success(`Welcome${isLogin ? ' back' : ''}, ${user.name}!`, {
-        style: { background: '#0c0a07', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.2)' },
+        style: { background: '#0c0a07', color: 'var(--accent)', border: '1px solid rgb(var(--accent-rgb)/0.2)' },
       });
       navigate(user.role === 'admin' ? '/admin' : from, { replace: true });
     } catch (err) {
@@ -50,7 +53,7 @@ export default function Login() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           {[20, 45, 70].map((top, i) => (
             <motion.div key={i} className="absolute h-px w-full"
-              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)' }}
+              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb)/0.3), transparent)' }}
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 12 + i * 3, repeat: Infinity, ease: 'linear', delay: i * 2 }}
             />
@@ -58,28 +61,22 @@ export default function Login() {
         </div>
 
         {/* Logo */}
-        <Link to="/" className="relative z-10 flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ border: '1px solid rgba(201,168,76,0.6)', background: 'rgba(201,168,76,0.08)' }}>
-            <span className="text-[9px] font-bold" style={{ color: '#C9A84C' }}>LW</span>
-          </div>
-          <span className="font-cormorant text-xl font-light tracking-[0.15em] uppercase text-white/80 group-hover:text-white transition-colors">
-            Luxe<span className="gold-text font-medium">Watches</span>
-          </span>
+        <Link to="/" className="relative z-10 group">
+          <Brand size="md" />
         </Link>
 
         {/* Center quote */}
         <div className="relative z-10 max-w-sm">
           <div className="mb-6">
-            <span className="font-cormorant text-7xl leading-none" style={{ color: 'rgba(201,168,76,0.25)' }}>"</span>
+            <span className="font-cormorant text-7xl leading-none" style={{ color: 'rgb(var(--accent-rgb)/0.25)' }}>"</span>
           </div>
           <p className="font-cormorant text-3xl sm:text-4xl font-light text-white leading-tight mb-6">
             Precision is not just a skill —{' '}
             <span className="gold-text font-medium italic">it's a luxury.</span>
           </p>
-          <div className="h-px w-12 mb-5" style={{ background: 'linear-gradient(90deg, #C9A84C, transparent)' }} />
-          <p className="text-xs tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,223,0.35)' }}>
-            LuxeWatches — Est. 2024
+          <div className="h-px w-12 mb-5" style={{ background: 'linear-gradient(90deg, var(--accent), transparent)' }} />
+          <p className="text-xs tracking-[0.3em] uppercase" style={{ color: 'rgb(var(--ink-rgb)/0.35)' }}>
+            {brandName} — Est. 2024
           </p>
         </div>
 
@@ -88,7 +85,7 @@ export default function Login() {
           {[['50K+', 'Customers'], ['500+', 'Designs'], ['4.9★', 'Rating']].map(([v, l]) => (
             <div key={l}>
               <p className="font-cormorant text-2xl gold-text font-medium">{v}</p>
-              <p className="text-[9px] tracking-[0.3em] uppercase" style={{ color: 'rgba(237,232,223,0.3)' }}>{l}</p>
+              <p className="text-[9px] tracking-[0.3em] uppercase" style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}>{l}</p>
             </div>
           ))}
         </div>
@@ -103,17 +100,14 @@ export default function Login() {
           className="w-full max-w-md"
         >
           {/* Mobile logo */}
-          <Link to="/" className="lg:hidden flex items-center justify-center gap-2.5 mb-8 group">
-            <div className="w-9 h-9 rounded-full flex items-center justify-center"
-              style={{ border: '1px solid rgba(201,168,76,0.5)', background: 'rgba(201,168,76,0.07)' }}>
-              <span className="text-[10px] font-bold" style={{ color: '#C9A84C' }}>LW</span>
-            </div>
+          <Link to="/" className="lg:hidden flex items-center justify-center mb-8 group">
+            <Brand size="md" variant="badge" />
           </Link>
 
           {/* Heading */}
           <div className="mb-9">
-            <p className="text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: 'rgba(201,168,76,0.7)' }}>
-              — LuxeWatches
+            <p className="text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: 'rgb(var(--accent-rgb)/0.7)' }}>
+              — {brandName}
             </p>
             <h1 className="font-cormorant text-4xl sm:text-5xl font-light text-white leading-tight">
               {isLogin ? (
@@ -122,8 +116,8 @@ export default function Login() {
                 <>Create Your<br /><span className="gold-text font-medium italic">Account.</span></>
               )}
             </h1>
-            <p className="text-sm mt-3" style={{ color: 'rgba(237,232,223,0.35)' }}>
-              {isLogin ? 'Sign in to access your account' : 'Join the LuxeWatches family today'}
+            <p className="text-sm mt-3" style={{ color: 'rgb(var(--ink-rgb)/0.35)' }}>
+              {isLogin ? 'Sign in to access your account' : `Join the ${brandName} family today`}
             </p>
           </div>
 
@@ -133,8 +127,8 @@ export default function Login() {
               <button key={tab} onClick={() => setIsLogin(i === 0)}
                 className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.25em] uppercase rounded-lg transition-all duration-300"
                 style={{
-                  background: (isLogin ? i === 0 : i === 1) ? 'linear-gradient(135deg, #C9A84C, #E8C97A)' : 'transparent',
-                  color: (isLogin ? i === 0 : i === 1) ? '#000' : 'rgba(237,232,223,0.35)',
+                  background: (isLogin ? i === 0 : i === 1) ? 'linear-gradient(135deg, var(--accent), var(--accent-2))' : 'transparent',
+                  color: (isLogin ? i === 0 : i === 1) ? '#000' : 'rgb(var(--ink-rgb)/0.35)',
                 }}>
                 {tab}
               </button>
@@ -147,17 +141,17 @@ export default function Login() {
               {!isLogin && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
                   className="relative">
-                  <User size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+                  <User size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgb(var(--accent-rgb)/0.5)' }} />
                   <input type="text" placeholder="Full Name" required value={form.name}
                     onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                     className="w-full rounded-xl pl-11 pr-4 py-3.5 text-sm outline-none transition-all duration-300"
                     style={{
                       background: 'rgba(255,255,255,0.04)',
                       border: '1px solid rgba(255,255,255,0.08)',
-                      color: '#EDE8DF',
+                      color: 'var(--ink)',
                       fontFamily: 'Inter',
                     }}
-                    onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                    onFocus={e => e.target.style.borderColor = 'rgb(var(--accent-rgb)/0.4)'}
                     onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                   />
                 </motion.div>
@@ -165,38 +159,38 @@ export default function Login() {
             </AnimatePresence>
 
             <div className="relative">
-              <Mail size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+              <Mail size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgb(var(--accent-rgb)/0.5)' }} />
               <input type="email" placeholder="Email Address" required value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                 className="w-full rounded-xl pl-11 pr-4 py-3.5 text-sm outline-none transition-all duration-300"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#EDE8DF' }}
-                onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--ink)' }}
+                onFocus={e => e.target.style.borderColor = 'rgb(var(--accent-rgb)/0.4)'}
                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
               />
             </div>
 
             <div className="relative">
-              <Lock size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgba(201,168,76,0.5)' }} />
+              <Lock size={15} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'rgb(var(--accent-rgb)/0.5)' }} />
               <input
                 type={showPwd ? 'text' : 'password'} placeholder="Password" required value={form.password}
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                 className="w-full rounded-xl pl-11 pr-12 py-3.5 text-sm outline-none transition-all duration-300"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#EDE8DF' }}
-                onFocus={e => e.target.style.borderColor = 'rgba(201,168,76,0.4)'}
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--ink)' }}
+                onFocus={e => e.target.style.borderColor = 'rgb(var(--accent-rgb)/0.4)'}
                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
               />
               <button type="button" onClick={() => setShowPwd(!showPwd)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
-                style={{ color: 'rgba(237,232,223,0.25)' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'rgba(237,232,223,0.7)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.25)'}>
+                style={{ color: 'rgb(var(--ink-rgb)/0.25)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.7)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.25)'}>
                 {showPwd ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
 
             <button type="submit" disabled={loading}
               className="group relative overflow-hidden w-full py-4 text-black text-[10px] font-bold tracking-[0.3em] uppercase rounded-xl mt-2 flex items-center justify-center gap-2.5 transition-opacity disabled:opacity-50"
-              style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}>
+              style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
               <motion.div className="absolute inset-0 bg-white/15" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.55 }} />
               <span className="relative">{loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}</span>
               {!loading && <ArrowRight size={12} className="relative group-hover:translate-x-1 transition-transform" />}
@@ -204,18 +198,18 @@ export default function Login() {
           </form>
 
           {isLogin && (
-            <p className="text-center text-[11px] mt-5" style={{ color: 'rgba(237,232,223,0.25)' }}>
+            <p className="text-center text-[11px] mt-5" style={{ color: 'rgb(var(--ink-rgb)/0.25)' }}>
               Demo admin:{' '}
-              <span style={{ color: 'rgba(201,168,76,0.7)' }}>admin@luxewatches.com</span>
-              {' '}/ <span style={{ color: 'rgba(201,168,76,0.7)' }}>admin123</span>
+              <span style={{ color: 'rgb(var(--accent-rgb)/0.7)' }}>admin@luxewatches.com</span>
+              {' '}/ <span style={{ color: 'rgb(var(--accent-rgb)/0.7)' }}>admin123</span>
             </p>
           )}
 
-          <p className="text-center mt-6 text-xs" style={{ color: 'rgba(237,232,223,0.2)' }}>
+          <p className="text-center mt-6 text-xs" style={{ color: 'rgb(var(--ink-rgb)/0.2)' }}>
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            <button onClick={() => setIsLogin(!isLogin)} className="transition-colors" style={{ color: '#C9A84C' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#E8C97A'}
-              onMouseLeave={e => e.currentTarget.style.color = '#C9A84C'}>
+            <button onClick={() => setIsLogin(!isLogin)} className="transition-colors" style={{ color: 'var(--accent)' }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-2)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--accent)'}>
               {isLogin ? 'Register' : 'Sign In'}
             </button>
           </p>

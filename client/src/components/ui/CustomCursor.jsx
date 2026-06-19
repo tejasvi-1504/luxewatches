@@ -37,11 +37,11 @@ export default function CustomCursor() {
     <>
       <motion.div
         style={{ x: springX, y: springY }}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#C9A84C]/60 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--accent)]/60 pointer-events-none z-[9999] mix-blend-difference"
       />
       <motion.div
         style={{ x: dotX, y: dotY }}
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#C9A84C] pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[var(--accent)] pointer-events-none z-[9999]"
       />
     </>
   );

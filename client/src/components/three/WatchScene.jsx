@@ -28,7 +28,7 @@ function WatchModel({ scrollY = 0 }) {
 
         {/* Watch bezel */}
         <Ring args={[0.82, 0.98, 64]} position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <meshStandardMaterial color="#C9A84C" metalness={1} roughness={0.1} />
+          <meshStandardMaterial color="var(--accent)" metalness={1} roughness={0.1} />
         </Ring>
 
         {/* Watch dial */}
@@ -43,14 +43,14 @@ function WatchModel({ scrollY = 0 }) {
           const z = Math.cos(angle) * 0.65;
           return (
             <Cylinder key={i} args={[0.025, 0.025, 0.04, 8]} position={[x, 0.12, z]} rotation={[Math.PI / 2, 0, 0]}>
-              <meshStandardMaterial color="#C9A84C" metalness={1} roughness={0.1} emissive="#C9A84C" emissiveIntensity={0.3} />
+              <meshStandardMaterial color="var(--accent)" metalness={1} roughness={0.1} emissive="var(--accent)" emissiveIntensity={0.3} />
             </Cylinder>
           );
         })}
 
         {/* Crown */}
         <Cylinder args={[0.06, 0.06, 0.15, 16]} position={[0.97, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <meshStandardMaterial color="#C9A84C" metalness={1} roughness={0.1} />
+          <meshStandardMaterial color="var(--accent)" metalness={1} roughness={0.1} />
         </Cylinder>
 
         {/* Watch strap - top */}
@@ -73,7 +73,7 @@ function WatchModel({ scrollY = 0 }) {
         </group>
 
         {/* Ambient glow */}
-        <pointLight position={[0, 2, 0]} intensity={0.5} color="#C9A84C" />
+        <pointLight position={[0, 2, 0]} intensity={0.5} color="var(--accent)" />
       </group>
     </Float>
   );
@@ -100,7 +100,7 @@ function Particles() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#C9A84C" transparent opacity={0.6} />
+      <pointsMaterial size={0.03} color="var(--accent)" transparent opacity={0.6} />
     </points>
   );
 }
@@ -116,8 +116,8 @@ export default function WatchScene({ height = '100%' }) {
         <Suspense fallback={null}>
           <ambientLight intensity={0.3} />
           <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
-          <directionalLight position={[-5, -3, -5]} intensity={0.5} color="#C9A84C" />
-          <pointLight position={[0, 3, 0]} intensity={1} color="#C9A84C" />
+          <directionalLight position={[-5, -3, -5]} intensity={0.5} color="var(--accent)" />
+          <pointLight position={[0, 3, 0]} intensity={1} color="var(--accent)" />
           <WatchModel />
           <Particles />
           <Environment preset="studio" />

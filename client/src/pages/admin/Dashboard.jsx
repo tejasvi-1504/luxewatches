@@ -16,7 +16,7 @@ export default function Dashboard() {
   }, []);
 
   const cards = stats ? [
-    { label: 'Total Revenue', value: `₹${stats.totalRevenue?.toLocaleString() || 0}`, icon: DollarSign, color: '#C9A84C', change: '+12%' },
+    { label: 'Total Revenue', value: `₹${stats.totalRevenue?.toLocaleString() || 0}`, icon: DollarSign, color: 'var(--accent)', change: '+12%' },
     { label: 'Total Orders', value: stats.totalOrders || 0, icon: ShoppingCart, color: '#60a5fa', change: '+8%' },
     { label: 'Pending Orders', value: stats.pendingOrders || 0, icon: Clock, color: '#f59e0b', change: '' },
     { label: 'Delivered', value: stats.deliveredOrders || 0, icon: CheckCircle, color: '#34d399', change: '+15%' },
@@ -58,7 +58,7 @@ export default function Dashboard() {
       {/* Revenue Chart placeholder */}
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 glass rounded-xl p-5">
-          <h2 className="text-sm font-semibold tracking-widest uppercase text-[#C9A84C] mb-4">Revenue (Last 6 Months)</h2>
+          <h2 className="text-sm font-semibold tracking-widest uppercase text-[var(--accent)] mb-4">Revenue (Last 6 Months)</h2>
           {stats?.revenueByMonth?.length > 0 ? (
             <div className="flex items-end gap-2 h-32">
               {stats.revenueByMonth.map((m, i) => {
@@ -67,7 +67,7 @@ export default function Dashboard() {
                 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
                 return (
                   <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                    <div className="w-full rounded-t bg-[#C9A84C]/60 hover:bg-[#C9A84C] transition-colors" style={{ height: `${height}%` }} />
+                    <div className="w-full rounded-t bg-[var(--accent)]/60 hover:bg-[var(--accent)] transition-colors" style={{ height: `${height}%` }} />
                     <span className="text-[9px] text-white/30">{months[m._id.month - 1]}</span>
                   </div>
                 );
@@ -80,7 +80,7 @@ export default function Dashboard() {
 
         {/* Recent Orders */}
         <div className="glass rounded-xl p-5">
-          <h2 className="text-sm font-semibold tracking-widest uppercase text-[#C9A84C] mb-4">Recent Orders</h2>
+          <h2 className="text-sm font-semibold tracking-widest uppercase text-[var(--accent)] mb-4">Recent Orders</h2>
           <div className="space-y-3">
             {recentOrders.map(order => (
               <div key={order._id} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
@@ -89,7 +89,7 @@ export default function Dashboard() {
                   <p className="text-[10px] text-white/30">{order.user?.name}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-[#C9A84C]">₹{order.totalPrice?.toLocaleString()}</p>
+                  <p className="text-xs text-[var(--accent)]">₹{order.totalPrice?.toLocaleString()}</p>
                   <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${STATUS_MAP[order.status] || 'bg-white/5 text-white/30'}`}>
                     {order.status}
                   </span>

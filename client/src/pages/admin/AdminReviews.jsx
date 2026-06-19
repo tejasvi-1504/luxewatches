@@ -47,7 +47,7 @@ export default function AdminReviews() {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
                     <p className="text-white text-sm font-medium">{review.name}</p>
-                    <div className="flex gap-0.5">{[1,2,3,4,5].map(s => <Star key={s} size={10} className={s <= review.rating ? 'fill-[#C9A84C] text-[#C9A84C]' : 'text-white/20'} />)}</div>
+                    <div className="flex gap-0.5">{[1,2,3,4,5].map(s => <Star key={s} size={10} className={s <= review.rating ? 'fill-[var(--accent)] text-[var(--accent)]' : 'text-white/20'} />)}</div>
                     <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${review.isApproved ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
                       {review.isApproved ? 'Approved' : 'Pending'}
                     </span>

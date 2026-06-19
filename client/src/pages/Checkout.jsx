@@ -30,7 +30,7 @@ export default function Checkout() {
       const items = cart.map(i => ({ product: i._id, name: i.name, image: i.images?.[0]?.url, price: i.price, quantity: i.qty }));
       const { data } = await api.post('/orders', { items, shippingAddress: form, paymentMethod: form.paymentMethod, itemsPrice: totalPrice, shippingPrice: shipping, taxPrice: tax, totalPrice: total });
       clearCart();
-      toast.success('Order placed successfully!', { style: { background: '#111', color: '#C9A84C', border: '1px solid #C9A84C33' } });
+      toast.success('Order placed successfully!', { style: { background: '#111', color: 'var(--accent)', border: '1px solid var(--accent)33' } });
       navigate(`/account/orders/${data.order._id}`);
     } catch (err) {
       toast.error(err.message);
@@ -43,7 +43,7 @@ export default function Checkout() {
     <div className="min-h-screen flex items-center justify-center text-white/30 pt-20">
       <div className="text-center">
         <p className="text-xl mb-3">Your cart is empty</p>
-        <button onClick={() => navigate('/shop')} className="text-[#C9A84C] text-sm tracking-widest uppercase">Shop Now</button>
+        <button onClick={() => navigate('/shop')} className="text-[var(--accent)] text-sm tracking-widest uppercase">Shop Now</button>
       </div>
     </div>
   );
@@ -55,7 +55,7 @@ export default function Checkout() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="lg:col-span-2 space-y-6">
           <div className="glass rounded-xl p-6">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-[#C9A84C] mb-5">Delivery Address</h2>
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-[var(--accent)] mb-5">Delivery Address</h2>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: 'Full Name', key: 'name', col: 2 },
@@ -69,42 +69,42 @@ export default function Checkout() {
                 <div key={key} className={col === 2 ? 'col-span-2' : ''}>
                   <label className="text-xs tracking-widest uppercase text-white/30 mb-1 block">{label}</label>
                   <input type="text" required value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:border-[#C9A84C] transition-colors placeholder-white/20" />
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--accent)] transition-colors placeholder-white/20" />
                 </div>
               ))}
             </div>
           </div>
 
           <div className="glass rounded-xl p-6">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-[#C9A84C] mb-5">Payment Method</h2>
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-[var(--accent)] mb-5">Payment Method</h2>
             <div className="space-y-3">
               {[
                 { value: 'cod', label: 'Cash on Delivery', icon: Truck, desc: 'Pay when you receive your order' },
                 { value: 'upi', label: 'UPI Payment', icon: CreditCard, desc: 'Pay via UPI (PhonePe, GPay, Paytm)' },
                 { value: 'online', label: 'Credit / Debit Card', icon: ShieldCheck, desc: 'Secure online payment' },
               ].map(({ value, label, icon: Icon, desc }) => (
-                <label key={value} className={`flex items-center gap-4 p-4 rounded-lg border cursor-pointer transition-all ${form.paymentMethod === value ? 'border-[#C9A84C] bg-[#C9A84C]/5' : 'border-white/10 hover:border-white/30'}`}>
+                <label key={value} className={`flex items-center gap-4 p-4 rounded-lg border cursor-pointer transition-all ${form.paymentMethod === value ? 'border-[var(--accent)] bg-[var(--accent)]/5' : 'border-white/10 hover:border-white/30'}`}>
                   <input type="radio" name="payment" value={value} checked={form.paymentMethod === value} onChange={e => setForm(f => ({ ...f, paymentMethod: e.target.value }))} className="sr-only" />
-                  <Icon size={20} className={form.paymentMethod === value ? 'text-[#C9A84C]' : 'text-white/30'} />
+                  <Icon size={20} className={form.paymentMethod === value ? 'text-[var(--accent)]' : 'text-white/30'} />
                   <div>
                     <p className="text-sm font-medium text-white">{label}</p>
                     <p className="text-xs text-white/30">{desc}</p>
                   </div>
-                  <div className={`ml-auto w-4 h-4 rounded-full border-2 ${form.paymentMethod === value ? 'border-[#C9A84C] bg-[#C9A84C]' : 'border-white/20'}`} />
+                  <div className={`ml-auto w-4 h-4 rounded-full border-2 ${form.paymentMethod === value ? 'border-[var(--accent)] bg-[var(--accent)]' : 'border-white/20'}`} />
                 </label>
               ))}
             </div>
           </div>
 
           <button type="submit" disabled={loading}
-            className="w-full py-4 bg-[#C9A84C] text-black font-semibold tracking-widest uppercase hover:bg-[#E8C97A] transition-colors disabled:opacity-50">
+            className="w-full py-4 bg-[var(--accent)] text-black font-semibold tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors disabled:opacity-50">
             {loading ? 'Placing Order...' : `Place Order — ₹${total.toLocaleString()}`}
           </button>
         </form>
 
         {/* Order Summary */}
         <div className="glass rounded-xl p-6 h-fit sticky top-24">
-          <h2 className="text-sm font-semibold tracking-widest uppercase text-[#C9A84C] mb-5">Order Summary</h2>
+          <h2 className="text-sm font-semibold tracking-widest uppercase text-[var(--accent)] mb-5">Order Summary</h2>
           <div className="space-y-3 mb-5">
             {cart.map(item => (
               <div key={item._id} className="flex gap-3">
@@ -112,7 +112,7 @@ export default function Checkout() {
                 <div className="flex-1">
                   <p className="text-sm text-white/80 line-clamp-1">{item.name}</p>
                   <p className="text-xs text-white/30">Qty: {item.qty}</p>
-                  <p className="text-sm text-[#C9A84C]">₹{(item.price * item.qty).toLocaleString()}</p>
+                  <p className="text-sm text-[var(--accent)]">₹{(item.price * item.qty).toLocaleString()}</p>
                 </div>
               </div>
             ))}
@@ -121,7 +121,7 @@ export default function Checkout() {
             <div className="flex justify-between text-white/50"><span>Subtotal</span><span>₹{totalPrice.toLocaleString()}</span></div>
             <div className="flex justify-between text-white/50"><span>Shipping</span><span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span></div>
             <div className="flex justify-between text-white/50"><span>Tax (3%)</span><span>₹{tax.toLocaleString()}</span></div>
-            <div className="flex justify-between text-white font-semibold pt-2 border-t border-white/5"><span>Total</span><span className="text-[#C9A84C]">₹{total.toLocaleString()}</span></div>
+            <div className="flex justify-between text-white font-semibold pt-2 border-t border-white/5"><span>Total</span><span className="text-[var(--accent)]">₹{total.toLocaleString()}</span></div>
           </div>
         </div>
       </div>

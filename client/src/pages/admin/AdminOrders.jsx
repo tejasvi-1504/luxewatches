@@ -94,7 +94,7 @@ export default function AdminOrders() {
                   <p className="text-white/30 text-[10px]">{order.user?.email}</p>
                 </td>
                 <td className="px-4 py-3 text-white/50 text-xs">{order.items?.length} items</td>
-                <td className="px-4 py-3 text-[#C9A84C] font-medium text-xs">₹{order.totalPrice?.toLocaleString()}</td>
+                <td className="px-4 py-3 text-[var(--accent)] font-medium text-xs">₹{order.totalPrice?.toLocaleString()}</td>
                 <td className="px-4 py-3">
                   <span className={`text-[9px] px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[order.status] || 'bg-white/10 text-white/40'}`}>
                     {order.status?.replace('_', ' ')}
@@ -104,7 +104,7 @@ export default function AdminOrders() {
                   {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <button onClick={() => openOrder(order)} className="text-xs text-[#C9A84C] hover:text-[#E8C97A] transition-colors underline">
+                  <button onClick={() => openOrder(order)} className="text-xs text-[var(--accent)] hover:text-[var(--accent-2)] transition-colors underline">
                     Manage
                   </button>
                 </td>
@@ -118,7 +118,7 @@ export default function AdminOrders() {
         <div className="flex gap-2 mt-4 justify-center">
           {Array.from({ length: pages }).map((_, i) => (
             <button key={i} onClick={() => setPage(i + 1)}
-              className={`w-8 h-8 text-xs rounded transition-all ${page === i + 1 ? 'bg-[#C9A84C] text-black' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
+              className={`w-8 h-8 text-xs rounded transition-all ${page === i + 1 ? 'bg-[var(--accent)] text-black' : 'glass text-white/50 hover:text-[var(--accent)]'}`}>
               {i + 1}
             </button>
           ))}
@@ -150,14 +150,14 @@ export default function AdminOrders() {
                       <p className="text-xs text-white">{item.name}</p>
                       <p className="text-[10px] text-white/30">Qty: {item.quantity}</p>
                     </div>
-                    <p className="text-xs text-[#C9A84C]">₹{(item.price * item.quantity).toLocaleString()}</p>
+                    <p className="text-xs text-[var(--accent)]">₹{(item.price * item.quantity).toLocaleString()}</p>
                   </div>
                 ))}
               </div>
 
               {/* Shipping */}
               <div className="glass rounded-xl p-4 mb-5 text-xs text-white/50 space-y-1">
-                <p className="text-[#C9A84C] font-semibold text-[10px] uppercase tracking-widest mb-2">Shipping Address</p>
+                <p className="text-[var(--accent)] font-semibold text-[10px] uppercase tracking-widest mb-2">Shipping Address</p>
                 <p>{selected.shippingAddress?.name} — {selected.shippingAddress?.phone}</p>
                 <p>{selected.shippingAddress?.street}, {selected.shippingAddress?.city}</p>
                 <p>{selected.shippingAddress?.state} — {selected.shippingAddress?.zip}</p>
@@ -165,7 +165,7 @@ export default function AdminOrders() {
 
               {/* Status History */}
               <div className="mb-5">
-                <p className="text-[#C9A84C] font-semibold text-[10px] uppercase tracking-widest mb-2">Status History</p>
+                <p className="text-[var(--accent)] font-semibold text-[10px] uppercase tracking-widest mb-2">Status History</p>
                 <div className="space-y-1 max-h-28 overflow-y-auto">
                   {selected.statusHistory?.map((h, i) => (
                     <div key={i} className="flex gap-3 text-xs">
@@ -179,21 +179,21 @@ export default function AdminOrders() {
 
               {/* Update Status */}
               <form onSubmit={handleUpdateStatus} className="space-y-3">
-                <p className="text-[#C9A84C] font-semibold text-[10px] uppercase tracking-widest">Update Status</p>
+                <p className="text-[var(--accent)] font-semibold text-[10px] uppercase tracking-widest">Update Status</p>
                 <select value={statusForm.status} onChange={e => setStatusForm(f => ({ ...f, status: e.target.value }))}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C]">
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)]">
                   {[...STATUSES, 'refund_requested', 'refunded'].map(s => (
                     <option key={s} value={s} className="bg-[#0f0f0f] capitalize">{s.replace('_', ' ')}</option>
                   ))}
                 </select>
                 <input value={statusForm.trackingNumber} onChange={e => setStatusForm(f => ({ ...f, trackingNumber: e.target.value }))}
                   placeholder="Tracking Number (optional)"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C] placeholder-white/20" />
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)] placeholder-white/20" />
                 <input value={statusForm.message} onChange={e => setStatusForm(f => ({ ...f, message: e.target.value }))}
                   placeholder="Status message..."
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C] placeholder-white/20" />
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)] placeholder-white/20" />
                 <button type="submit" disabled={saving}
-                  className="w-full py-3 bg-[#C9A84C] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[#E8C97A] transition-colors disabled:opacity-50 rounded-lg">
+                  className="w-full py-3 bg-[var(--accent)] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors disabled:opacity-50 rounded-lg">
                   {saving ? 'Updating...' : 'Update Order'}
                 </button>
               </form>

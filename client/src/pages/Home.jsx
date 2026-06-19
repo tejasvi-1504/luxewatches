@@ -92,7 +92,7 @@ function GoldDivider({ className = '' }) {
       initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className={`h-px origin-left ${className}`}
-      style={{ background: 'linear-gradient(90deg, #C9A84C, rgba(201,168,76,0.3), transparent)' }}
+      style={{ background: 'linear-gradient(90deg, var(--accent), rgb(var(--accent-rgb)/0.3), transparent)' }}
     />
   );
 }
@@ -102,9 +102,9 @@ function SectionLabel({ children }) {
     <motion.p
       initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="text-[9px] tracking-[0.55em] uppercase mb-4 flex items-center gap-3"
-      style={{ color: '#C9A84C' }}
+      style={{ color: 'var(--accent)' }}
     >
-      <span className="inline-block w-5 h-px" style={{ background: '#C9A84C' }} />
+      <span className="inline-block w-5 h-px" style={{ background: 'var(--accent)' }} />
       {children}
     </motion.p>
   );
@@ -157,7 +157,7 @@ export default function Home() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
           {[12, 32, 52, 72, 88].map((top, i) => (
             <motion.div key={i} className="absolute h-px w-full"
-              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)' }}
+              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb)/0.18), transparent)' }}
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 16 + i * 3, repeat: Infinity, ease: 'linear', delay: i * 1.8 }}
             />
@@ -166,7 +166,7 @@ export default function Home() {
 
         {/* Glowing orb */}
         <motion.div className="absolute right-[8%] top-[15%] w-[500px] h-[500px] rounded-full pointer-events-none hidden lg:block"
-          style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgb(var(--accent-rgb)/0.07) 0%, transparent 70%)' }}
           animate={{ scale: [1, 1.18, 1], opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -181,8 +181,8 @@ export default function Home() {
             >
               {/* Tag */}
               <motion.div className="flex items-center gap-3 mb-7" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                <div className="h-px w-10" style={{ background: '#C9A84C' }} />
-                <span className="text-[9px] tracking-[0.5em] uppercase" style={{ color: '#C9A84C' }}>
+                <div className="h-px w-10" style={{ background: 'var(--accent)' }} />
+                <span className="text-[9px] tracking-[0.5em] uppercase" style={{ color: 'var(--accent)' }}>
                   {HERO_SLIDES[activeHero].tag}
                 </span>
               </motion.div>
@@ -211,7 +211,7 @@ export default function Home() {
 
               <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
                 className="text-sm leading-relaxed mb-9 max-w-md"
-                style={{ color: 'rgba(237,232,223,0.42)', lineHeight: 1.8 }}>
+                style={{ color: 'rgb(var(--ink-rgb)/0.42)', lineHeight: 1.8 }}>
                 {HERO_SLIDES[activeHero].desc}
               </motion.p>
 
@@ -219,16 +219,16 @@ export default function Home() {
                 className="flex flex-wrap gap-3">
                 <Link to={HERO_SLIDES[activeHero].cta}
                   className="group relative overflow-hidden flex items-center gap-2.5 px-8 py-3.5 text-black text-[10px] font-bold tracking-[0.22em] uppercase"
-                  style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}>
+                  style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
                   <motion.div className="absolute inset-0 bg-white/20" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.55 }} />
                   <span className="relative">Shop Collection</span>
                   <ArrowRight size={12} className="relative group-hover:translate-x-1.5 transition-transform duration-300" />
                 </Link>
                 <Link to="/shop"
                   className="flex items-center gap-2.5 px-8 py-3.5 text-[10px] tracking-[0.22em] uppercase transition-all duration-300"
-                  style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(237,232,223,0.5)' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.4)'; e.currentTarget.style.color = '#C9A84C'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(237,232,223,0.5)'; }}>
+                  style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgb(var(--ink-rgb)/0.5)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--accent-rgb)/0.4)'; e.currentTarget.style.color = 'var(--accent)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.5)'; }}>
                   View All
                 </Link>
               </motion.div>
@@ -257,7 +257,7 @@ export default function Home() {
                 width: activeHero === i ? 30 : 6,
                 height: 5,
                 background: activeHero === i
-                  ? 'linear-gradient(90deg, #C9A84C, #E8C97A)'
+                  ? 'linear-gradient(90deg, var(--accent), var(--accent-2))'
                   : 'rgba(255,255,255,0.18)',
               }} />
           ))}
@@ -266,8 +266,8 @@ export default function Home() {
         {/* Slide counter — bottom right */}
         <div className="absolute bottom-9 right-8 hidden sm:flex items-center gap-2 z-10">
           <span className="font-cormorant text-2xl font-light gold-text">{String(activeHero + 1).padStart(2, '0')}</span>
-          <div className="w-8 h-px" style={{ background: 'rgba(201,168,76,0.3)' }} />
-          <span className="font-cormorant text-lg font-light" style={{ color: 'rgba(237,232,223,0.25)' }}>
+          <div className="w-8 h-px" style={{ background: 'rgb(var(--accent-rgb)/0.3)' }} />
+          <span className="font-cormorant text-lg font-light" style={{ color: 'rgb(var(--ink-rgb)/0.25)' }}>
             {String(HERO_SLIDES.length).padStart(2, '0')}
           </span>
         </div>
@@ -275,14 +275,14 @@ export default function Home() {
         {/* Scroll indicator */}
         <motion.div animate={{ y: [0, 9, 0] }} transition={{ duration: 2.5, repeat: Infinity }}
           className="absolute bottom-10 left-8 hidden sm:flex flex-col items-center gap-1.5"
-          style={{ color: 'rgba(237,232,223,0.2)' }}>
+          style={{ color: 'rgb(var(--ink-rgb)/0.2)' }}>
           <span className="text-[8px] tracking-[0.45em] uppercase">Scroll</span>
           <ChevronDown size={12} />
         </motion.div>
       </section>
 
       {/* ── BRAND STRIP ── */}
-      <div className="py-4 overflow-hidden relative" style={{ background: '#0d0a07', borderTop: '1px solid rgba(201,168,76,0.06)', borderBottom: '1px solid rgba(201,168,76,0.06)' }}>
+      <div className="py-4 overflow-hidden relative" style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
         <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(90deg, #0d0a07, transparent)' }} />
         <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(270deg, #0d0a07, transparent)' }} />
         <motion.div
@@ -292,9 +292,9 @@ export default function Home() {
         >
           {[...BRANDS, ...BRANDS].map((b, i) => (
             <span key={i} className="text-[9px] tracking-[0.45em] uppercase transition-colors duration-300"
-              style={{ color: 'rgba(237,232,223,0.12)' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'rgba(201,168,76,0.45)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.12)'}>
+              style={{ color: 'rgb(var(--ink-rgb)/0.12)' }}
+              onMouseEnter={e => e.currentTarget.style.color = 'rgb(var(--accent-rgb)/0.45)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.12)'}>
               {b}
             </span>
           ))}
@@ -312,9 +312,9 @@ export default function Home() {
           </div>
           <Link to="/shop"
             className="hidden sm:flex items-center gap-2 text-[9px] tracking-[0.4em] uppercase transition-colors group"
-            style={{ color: 'rgba(237,232,223,0.3)' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#C9A84C'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.3)'}>
+            style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.3)'}>
             All Products
             <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
@@ -335,15 +335,15 @@ export default function Home() {
                 {/* Gradient */}
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, rgba(8,6,4,0.9) 0%, rgba(8,6,4,0.1) 55%, transparent 100%)' }} />
                 {/* Hover gold tint */}
-                <motion.div className="absolute inset-0" style={{ background: 'rgba(201,168,76,0.07)' }}
+                <motion.div className="absolute inset-0" style={{ background: 'rgb(var(--accent-rgb)/0.07)' }}
                   initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} transition={{ duration: 0.4 }} />
                 {/* Gold border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ border: '1px solid rgba(201,168,76,0.28)' }} />
+                  style={{ border: '1px solid rgb(var(--accent-rgb)/0.28)' }} />
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
                   <p className="text-white font-cormorant text-lg sm:text-xl font-medium leading-tight">{cat.label}</p>
-                  <p className="text-[9px] tracking-[0.35em] uppercase mt-1" style={{ color: '#C9A84C' }}>{cat.count} Styles</p>
+                  <p className="text-[9px] tracking-[0.35em] uppercase mt-1" style={{ color: 'var(--accent)' }}>{cat.count} Styles</p>
                   <div className="flex items-center gap-1.5 mt-3 text-[9px] tracking-[0.3em] uppercase overflow-hidden"
                     style={{ height: '0px', opacity: 0 }}
                     ref={el => {
@@ -355,8 +355,8 @@ export default function Home() {
                       }
                     }}
                   >
-                    <span style={{ color: 'rgba(201,168,76,0.7)' }}>Explore</span>
-                    <ArrowRight size={9} style={{ color: '#C9A84C' }} />
+                    <span style={{ color: 'rgb(var(--accent-rgb)/0.7)' }}>Explore</span>
+                    <ArrowRight size={9} style={{ color: 'var(--accent)' }} />
                   </div>
                 </div>
               </Link>
@@ -366,7 +366,7 @@ export default function Home() {
       </section>
 
       {/* ── METRICS STRIP ── */}
-      <section style={{ background: '#0d0a07', borderTop: '1px solid rgba(201,168,76,0.07)', borderBottom: '1px solid rgba(201,168,76,0.07)' }} className="py-10 sm:py-12">
+      <section style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.07)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.07)' }} className="py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-6">
             {METRICS.map(({ value, label }, i) => (
@@ -376,7 +376,7 @@ export default function Home() {
                 className="text-center"
               >
                 <p className="font-cormorant text-3xl sm:text-4xl font-light gold-text leading-none">{value}</p>
-                <p className="text-[8px] tracking-[0.35em] uppercase mt-2" style={{ color: 'rgba(237,232,223,0.3)' }}>{label}</p>
+                <p className="text-[8px] tracking-[0.35em] uppercase mt-2" style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}>{label}</p>
               </motion.div>
             ))}
           </div>
@@ -394,9 +394,9 @@ export default function Home() {
           </div>
           <Link to="/shop?featured=true"
             className="hidden sm:flex items-center gap-2 text-[9px] tracking-[0.4em] uppercase transition-colors group"
-            style={{ color: 'rgba(237,232,223,0.3)' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#C9A84C'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.3)'}>
+            style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.3)'}>
             View All <ArrowUpRight size={11} />
           </Link>
         </div>
@@ -416,7 +416,7 @@ export default function Home() {
 
         {/* Giant background word */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-          <span className="font-cormorant font-bold tracking-tighter uppercase" style={{ fontSize: '20vw', color: 'rgba(255,255,255,0.012)' }}>LUXE</span>
+          <span className="font-cormorant font-bold tracking-tighter uppercase" style={{ fontSize: '20vw', color: 'rgba(255,255,255,0.012)' }}>SPARKLE</span>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-16 sm:gap-24 items-center">
@@ -433,13 +433,13 @@ export default function Home() {
             </div>
             <GoldDivider className="mb-7" />
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
-              className="leading-relaxed mb-9 max-w-sm text-sm" style={{ color: 'rgba(237,232,223,0.32)', lineHeight: 1.9 }}>
+              className="leading-relaxed mb-9 max-w-sm text-sm" style={{ color: 'rgb(var(--ink-rgb)/0.32)', lineHeight: 1.9 }}>
               Every piece mirrors the finest luxury brands, crafted with precision and care. Premium style shouldn't cost a fortune.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.65 }}>
               <Link to="/shop"
                 className="group inline-flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase pb-1 transition-colors"
-                style={{ color: '#C9A84C', borderBottom: '1px solid rgba(201,168,76,0.3)' }}>
+                style={{ color: 'var(--accent)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.3)' }}>
                 Discover Collection
                 <ArrowRight size={11} className="group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
@@ -454,17 +454,17 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }} viewport={{ once: true }}
                 className="group p-5 sm:p-6 rounded-2xl transition-all duration-500 cursor-default"
                 style={{ background: 'rgba(255,255,255,0.018)', border: '1px solid rgba(255,255,255,0.055)' }}
-                whileHover={{ borderColor: 'rgba(201,168,76,0.22)', background: 'rgba(201,168,76,0.035)' }}
+                whileHover={{ borderColor: 'rgb(var(--accent-rgb)/0.22)', background: 'rgb(var(--accent-rgb)/0.035)' }}
               >
                 <motion.div
                   className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-all duration-400"
-                  style={{ background: 'rgba(201,168,76,0.1)' }}
-                  whileHover={{ background: '#C9A84C', scale: 1.07 }}
+                  style={{ background: 'rgb(var(--accent-rgb)/0.1)' }}
+                  whileHover={{ background: 'var(--accent)', scale: 1.07 }}
                 >
-                  <Icon size={16} style={{ color: '#C9A84C' }} />
+                  <Icon size={16} style={{ color: 'var(--accent)' }} />
                 </motion.div>
                 <p className="text-white font-medium text-sm mb-1.5 leading-snug">{title}</p>
-                <p className="text-xs leading-relaxed" style={{ color: 'rgba(237,232,223,0.28)' }}>{desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'rgb(var(--ink-rgb)/0.28)' }}>{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -482,9 +482,9 @@ export default function Home() {
           </div>
           <Link to="/shop?sort=newest"
             className="hidden sm:flex items-center gap-2 text-[9px] tracking-[0.4em] uppercase transition-colors"
-            style={{ color: 'rgba(237,232,223,0.3)' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#C9A84C'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(237,232,223,0.3)'}>
+            style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.3)'}>
             Shop All <ArrowUpRight size={11} />
           </Link>
         </div>
@@ -495,7 +495,7 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-20 sm:py-24" style={{ background: '#0d0a07', borderTop: '1px solid rgba(201,168,76,0.06)', borderBottom: '1px solid rgba(201,168,76,0.06)' }}>
+      <section className="py-20 sm:py-24" style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
             <SectionLabel>Customer Love</SectionLabel>
@@ -507,7 +507,7 @@ export default function Home() {
             {/* Ornamental stars */}
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
               className="flex justify-center gap-1 mt-5">
-              {[...Array(5)].map((_, i) => <Star key={i} size={11} className="fill-[#C9A84C] text-[#C9A84C]" />)}
+              {[...Array(5)].map((_, i) => <Star key={i} size={11} className="fill-[var(--accent)] text-[var(--accent)]" />)}
             </motion.div>
           </div>
 
@@ -527,27 +527,27 @@ export default function Home() {
                   transition={{ delay: i * 0.08 }} viewport={{ once: true }}
                   className="relative p-6 sm:p-7 rounded-2xl h-full transition-all duration-400"
                   style={{ background: 'rgba(255,255,255,0.018)', border: '1px solid rgba(255,255,255,0.055)' }}
-                  whileHover={{ borderColor: 'rgba(201,168,76,0.2)', background: 'rgba(201,168,76,0.03)' }}
+                  whileHover={{ borderColor: 'rgb(var(--accent-rgb)/0.2)', background: 'rgb(var(--accent-rgb)/0.03)' }}
                 >
                   {/* Giant quote mark */}
                   <span className="absolute top-3 right-5 font-cormorant leading-none select-none pointer-events-none"
-                    style={{ fontSize: 80, color: 'rgba(201,168,76,0.07)', lineHeight: 1 }}>"</span>
+                    style={{ fontSize: 80, color: 'rgb(var(--accent-rgb)/0.07)', lineHeight: 1 }}>"</span>
 
                   <div className="flex gap-0.5 mb-5">
-                    {[...Array(t.rating)].map((_, j) => <Star key={j} size={9} className="fill-[#C9A84C] text-[#C9A84C]" />)}
+                    {[...Array(t.rating)].map((_, j) => <Star key={j} size={9} className="fill-[var(--accent)] text-[var(--accent)]" />)}
                   </div>
                   <p className="text-sm leading-relaxed mb-6 italic font-cormorant"
-                    style={{ color: 'rgba(237,232,223,0.55)', fontSize: 16, lineHeight: 1.7 }}>
+                    style={{ color: 'rgb(var(--ink-rgb)/0.55)', fontSize: 16, lineHeight: 1.7 }}>
                     "{t.text}"
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold font-cormorant shrink-0"
-                      style={{ background: 'rgba(201,168,76,0.12)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.2)' }}>
+                      style={{ background: 'rgb(var(--accent-rgb)/0.12)', color: 'var(--accent)', border: '1px solid rgb(var(--accent-rgb)/0.2)' }}>
                       {t.name[0]}
                     </div>
                     <div>
                       <p className="text-white text-sm font-medium">{t.name}</p>
-                      <p className="text-[10px] tracking-widest uppercase" style={{ color: 'rgba(237,232,223,0.25)' }}>{t.city}</p>
+                      <p className="text-[10px] tracking-widest uppercase" style={{ color: 'rgb(var(--ink-rgb)/0.25)' }}>{t.city}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -596,35 +596,35 @@ export default function Home() {
           </div>
 
           <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px flex-1 max-w-[80px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4))' }} />
-            <span style={{ color: 'rgba(201,168,76,0.5)', fontSize: 10 }}>✦</span>
-            <div className="h-px flex-1 max-w-[80px]" style={{ background: 'linear-gradient(270deg, transparent, rgba(201,168,76,0.4))' }} />
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb)/0.4))' }} />
+            <span style={{ color: 'rgb(var(--accent-rgb)/0.5)', fontSize: 10 }}>✦</span>
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: 'linear-gradient(270deg, transparent, rgb(var(--accent-rgb)/0.4))' }} />
           </div>
 
-          <p className="max-w-md mx-auto mb-10 text-sm leading-relaxed" style={{ color: 'rgba(237,232,223,0.3)', lineHeight: 1.9 }}>
+          <p className="max-w-md mx-auto mb-10 text-sm leading-relaxed" style={{ color: 'rgb(var(--ink-rgb)/0.3)', lineHeight: 1.9 }}>
             From iconic timepieces to statement bags — pieces that turn heads and start conversations.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center">
             <Link to="/shop"
               className="group relative overflow-hidden flex items-center gap-3 px-9 py-4 text-black text-[10px] font-bold tracking-[0.25em] uppercase"
-              style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}>
+              style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
               <motion.div className="absolute inset-0 bg-white/20" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.55 }} />
               <span className="relative">Shop Now</span>
               <ArrowRight size={12} className="relative group-hover:translate-x-1.5 transition-transform" />
             </Link>
             <Link to="/shop?gender=men"
               className="px-9 py-4 text-[10px] tracking-[0.25em] uppercase transition-all duration-300"
-              style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(237,232,223,0.45)' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'; e.currentTarget.style.color = '#C9A84C'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(237,232,223,0.45)'; }}>
+              style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgb(var(--ink-rgb)/0.45)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--accent-rgb)/0.35)'; e.currentTarget.style.color = 'var(--accent)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.45)'; }}>
               Men's
             </Link>
             <Link to="/shop?gender=women"
               className="px-9 py-4 text-[10px] tracking-[0.25em] uppercase transition-all duration-300"
-              style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(237,232,223,0.45)' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'; e.currentTarget.style.color = '#C9A84C'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(237,232,223,0.45)'; }}>
+              style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgb(var(--ink-rgb)/0.45)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--accent-rgb)/0.35)'; e.currentTarget.style.color = 'var(--accent)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgb(var(--ink-rgb)/0.45)'; }}>
               Women's
             </Link>
           </div>

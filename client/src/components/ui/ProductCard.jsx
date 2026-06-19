@@ -31,7 +31,7 @@ export default function ProductCard({ product, index = 0 }) {
     e.stopPropagation();
     addToCart(product);
     toast.success(`${product.name} added!`, {
-      style: { background: '#0c0a07', color: '#E8C97A', border: '1px solid rgba(201,168,76,0.2)', fontSize: '12px', fontFamily: 'Inter' },
+      style: { background: '#0c0a07', color: 'var(--accent-2)', border: '1px solid rgb(var(--accent-rgb)/0.2)', fontSize: '12px', fontFamily: 'Inter' },
     });
   };
 
@@ -56,9 +56,9 @@ export default function ProductCard({ product, index = 0 }) {
           style={{
             rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d',
             background: '#0e0b08',
-            border: hovered ? '1px solid rgba(201,168,76,0.22)' : '1px solid rgba(255,255,255,0.045)',
+            border: hovered ? '1px solid rgb(var(--accent-rgb)/0.22)' : '1px solid rgba(255,255,255,0.045)',
             transition: 'border-color 0.4s, box-shadow 0.4s',
-            boxShadow: hovered ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(201,168,76,0.06)' : '0 4px 20px rgba(0,0,0,0.3)',
+            boxShadow: hovered ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgb(var(--accent-rgb)/0.06)' : '0 4px 20px rgba(0,0,0,0.3)',
             borderRadius: '1rem', overflow: 'hidden', position: 'relative',
           }}
         >
@@ -82,7 +82,7 @@ export default function ProductCard({ product, index = 0 }) {
             {/* Gold shine sweep */}
             <motion.div
               className="absolute inset-0 pointer-events-none"
-              style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(201,168,76,0.07) 50%, transparent 70%)' }}
+              style={{ background: 'linear-gradient(115deg, transparent 30%, rgb(var(--accent-rgb)/0.07) 50%, transparent 70%)' }}
               initial={{ x: '-100%' }} whileHover={{ x: '100%' }}
               transition={{ duration: 0.9 }}
             />
@@ -94,14 +94,14 @@ export default function ProductCard({ product, index = 0 }) {
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.07 + 0.2 }}
                   className="text-[8px] font-bold tracking-[0.3em] uppercase px-2.5 py-1 rounded-full"
-                  style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', color: '#000' }}
+                  style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))', color: '#000' }}
                 >
                   New
                 </motion.span>
               )}
               {product.isBestseller && (
                 <span className="text-[8px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', color: 'rgba(237,232,223,0.8)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                  style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', color: 'rgb(var(--ink-rgb)/0.8)', border: '1px solid rgba(255,255,255,0.12)' }}>
                   Best Seller
                 </span>
               )}
@@ -110,7 +110,7 @@ export default function ProductCard({ product, index = 0 }) {
             {/* Discount — top right */}
             {discount > 0 && (
               <div className="absolute top-3 right-3">
-                <span className="text-[10px] font-semibold tracking-wide" style={{ color: 'rgba(237,232,223,0.85)' }}>−{discount}%</span>
+                <span className="text-[10px] font-semibold tracking-wide" style={{ color: 'rgb(var(--ink-rgb)/0.85)' }}>−{discount}%</span>
               </div>
             )}
 
@@ -129,7 +129,7 @@ export default function ProductCard({ product, index = 0 }) {
               <button
                 onClick={handleAdd}
                 className="w-full py-3.5 flex items-center justify-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-black transition-all"
-                style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}>
+                style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
                 <ShoppingBag size={12} />
                 Add to Cart
               </button>
@@ -138,14 +138,14 @@ export default function ProductCard({ product, index = 0 }) {
 
           {/* Info */}
           <div className="p-4">
-            <p className="text-[8px] tracking-[0.4em] uppercase mb-1.5 leading-none" style={{ color: '#C9A84C' }}>
+            <p className="text-[8px] tracking-[0.4em] uppercase mb-1.5 leading-none" style={{ color: 'var(--accent)' }}>
               {product.brand}
               {product.originalBrand && (
-                <span className="ml-1.5" style={{ color: 'rgba(237,232,223,0.2)' }}>· {product.originalBrand} Inspired</span>
+                <span className="ml-1.5" style={{ color: 'rgb(var(--ink-rgb)/0.2)' }}>· {product.originalBrand} Inspired</span>
               )}
             </p>
             <h3 className="font-cormorant text-base font-medium leading-tight mb-3 transition-colors duration-300 line-clamp-1"
-              style={{ color: hovered ? '#EDE8DF' : 'rgba(237,232,223,0.8)', fontSize: 17 }}>
+              style={{ color: hovered ? 'var(--ink)' : 'rgb(var(--ink-rgb)/0.8)', fontSize: 17 }}>
               {product.name}
             </h3>
 
@@ -155,19 +155,19 @@ export default function ProductCard({ product, index = 0 }) {
             <div className="flex items-center justify-between">
               <div className="flex items-baseline gap-2">
                 <span className="text-base font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontSize: 16 }}>
+                  style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontSize: 16 }}>
                   ₹{product.price?.toLocaleString('en-IN')}
                 </span>
                 {product.originalPrice && (
-                  <span className="text-xs line-through" style={{ color: 'rgba(237,232,223,0.18)' }}>
+                  <span className="text-xs line-through" style={{ color: 'rgb(var(--ink-rgb)/0.18)' }}>
                     ₹{product.originalPrice?.toLocaleString('en-IN')}
                   </span>
                 )}
               </div>
               {product.rating > 0 && (
                 <div className="flex items-center gap-1">
-                  <Star size={8} className="fill-[#C9A84C] text-[#C9A84C]" />
-                  <span className="text-[10px]" style={{ color: 'rgba(237,232,223,0.3)' }}>{product.rating}</span>
+                  <Star size={8} className="fill-[var(--accent)] text-[var(--accent)]" />
+                  <span className="text-[10px]" style={{ color: 'rgb(var(--ink-rgb)/0.3)' }}>{product.rating}</span>
                 </div>
               )}
             </div>

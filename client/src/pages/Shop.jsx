@@ -84,15 +84,15 @@ export default function Shop() {
       {/* Controls */}
       <div className="flex items-center justify-between mb-6 gap-4">
         <button onClick={() => setFiltersOpen(!filtersOpen)}
-          className="flex items-center gap-2 glass px-4 py-2 rounded-lg text-sm text-white/70 hover:text-[#C9A84C] transition-colors">
+          className="flex items-center gap-2 glass px-4 py-2 rounded-lg text-sm text-white/70 hover:text-[var(--accent)] transition-colors">
           <SlidersHorizontal size={15} />
-          Filters {activeFilters > 0 && <span className="bg-[#C9A84C] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">{activeFilters}</span>}
+          Filters {activeFilters > 0 && <span className="bg-[var(--accent)] text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">{activeFilters}</span>}
         </button>
 
         <div className="flex items-center gap-2 flex-wrap">
           {['men', 'women'].map(g => (
             <button key={g} onClick={() => setParam('gender', gender === g ? '' : g)}
-              className={`text-[10px] tracking-widest uppercase px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all ${gender === g ? 'bg-[#C9A84C] text-black font-bold' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
+              className={`text-[10px] tracking-widest uppercase px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all ${gender === g ? 'bg-[var(--accent)] text-black font-bold' : 'glass text-white/50 hover:text-[var(--accent)]'}`}>
               {g}
             </button>
           ))}
@@ -127,11 +127,11 @@ export default function Shop() {
               <div className="w-60 space-y-6">
                 {/* Type */}
                 <div>
-                  <h3 className="text-xs tracking-widest uppercase text-[#C9A84C] mb-3">Product Type</h3>
+                  <h3 className="text-xs tracking-widest uppercase text-[var(--accent)] mb-3">Product Type</h3>
                   <div className="space-y-2">
                     {TYPES.map(t => (
                       <button key={t} onClick={() => setParam('type', type === t ? '' : t)}
-                        className={`block w-full text-left text-sm px-3 py-2 rounded transition-all ${type === t ? 'bg-[#C9A84C]/10 text-[#C9A84C] border border-[#C9A84C]/30' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                        className={`block w-full text-left text-sm px-3 py-2 rounded transition-all ${type === t ? 'bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
                         {t.charAt(0).toUpperCase() + t.slice(1)}s
                       </button>
                     ))}
@@ -140,11 +140,11 @@ export default function Shop() {
 
                 {/* Price */}
                 <div>
-                  <h3 className="text-xs tracking-widest uppercase text-[#C9A84C] mb-3">Price Range</h3>
+                  <h3 className="text-xs tracking-widest uppercase text-[var(--accent)] mb-3">Price Range</h3>
                   <div className="space-y-2">
                     {PRICE_RANGES.map(r => (
                       <button key={r.label} onClick={() => setPriceRange(r.min, r.max)}
-                        className={`block w-full text-left text-sm px-3 py-2 rounded transition-all ${minPrice == r.min ? 'bg-[#C9A84C]/10 text-[#C9A84C] border border-[#C9A84C]/30' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                        className={`block w-full text-left text-sm px-3 py-2 rounded transition-all ${minPrice == r.min ? 'bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
                         {r.label}
                       </button>
                     ))}
@@ -170,7 +170,7 @@ export default function Shop() {
           ) : products.length === 0 ? (
             <div className="text-center py-24">
               <p className="text-white/20 text-xl mb-2">No products found</p>
-              <button onClick={clearFilters} className="text-[#C9A84C] text-sm tracking-widest uppercase">Clear filters</button>
+              <button onClick={clearFilters} className="text-[var(--accent)] text-sm tracking-widest uppercase">Clear filters</button>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
@@ -183,7 +183,7 @@ export default function Shop() {
             <div className="flex justify-center gap-2 mt-12">
               {Array.from({ length: pages }).map((_, i) => (
                 <button key={i} onClick={() => setParam('page', i + 1)}
-                  className={`w-9 h-9 text-sm rounded transition-all ${page === i + 1 ? 'bg-[#C9A84C] text-black' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
+                  className={`w-9 h-9 text-sm rounded transition-all ${page === i + 1 ? 'bg-[var(--accent)] text-black' : 'glass text-white/50 hover:text-[var(--accent)]'}`}>
                   {i + 1}
                 </button>
               ))}
@@ -198,7 +198,7 @@ export default function Shop() {
 function FilterChip({ label, onRemove }) {
   return (
     <motion.span initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-      className="flex items-center gap-1.5 px-3 py-1 glass-gold rounded-full text-xs text-[#C9A84C] capitalize">
+      className="flex items-center gap-1.5 px-3 py-1 glass-gold rounded-full text-xs text-[var(--accent)] capitalize">
       {label}
       <button onClick={onRemove} className="hover:text-white transition-colors"><X size={10} /></button>
     </motion.span>

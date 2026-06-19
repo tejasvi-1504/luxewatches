@@ -62,7 +62,7 @@ export default function Account() {
         <div className="lg:col-span-1">
           <div className="glass rounded-xl p-5">
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-white/5">
-              <div className="w-12 h-12 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/30 flex items-center justify-center text-[#C9A84C] font-semibold text-lg">
+              <div className="w-12 h-12 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 flex items-center justify-center text-[var(--accent)] font-semibold text-lg">
                 {user.name[0].toUpperCase()}
               </div>
               <div>
@@ -73,7 +73,7 @@ export default function Account() {
             <nav className="space-y-1">
               {TABS.map(({ id, label, icon: Icon }) => (
                 <button key={id} onClick={() => setTab(id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${tab === id ? 'bg-[#C9A84C]/10 text-[#C9A84C]' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${tab === id ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
                   <Icon size={16} />
                   {label}
                 </button>
@@ -98,7 +98,7 @@ export default function Account() {
                 <div className="glass rounded-xl p-12 text-center">
                   <Package size={40} className="text-white/10 mx-auto mb-3" />
                   <p className="text-white/30">No orders yet</p>
-                  <Link to="/shop" className="text-[#C9A84C] text-sm mt-2 inline-block hover:underline">Start Shopping</Link>
+                  <Link to="/shop" className="text-[var(--accent)] text-sm mt-2 inline-block hover:underline">Start Shopping</Link>
                 </div>
               ) : (
                 orders.map(order => {
@@ -128,7 +128,7 @@ export default function Account() {
                         )}
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[#C9A84C] font-semibold">₹{order.totalPrice?.toLocaleString()}</span>
+                        <span className="text-[var(--accent)] font-semibold">₹{order.totalPrice?.toLocaleString()}</span>
                         <div className="flex gap-2">
                           {order.status === 'delivered' && (
                             <button onClick={() => handleRefund(order._id)} className="text-xs text-white/30 hover:text-orange-400 transition-colors underline">
@@ -170,10 +170,10 @@ export default function Account() {
                 {[{ label: 'Full Name', value: user.name }, { label: 'Email', value: user.email }].map(({ label, value }) => (
                   <div key={label}>
                     <label className="text-xs tracking-widest uppercase text-white/30 mb-1 block">{label}</label>
-                    <input defaultValue={value} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:border-[#C9A84C] transition-colors" />
+                    <input defaultValue={value} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--accent)] transition-colors" />
                   </div>
                 ))}
-                <button className="px-6 py-2.5 bg-[#C9A84C] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[#E8C97A] transition-colors rounded-lg mt-2">
+                <button className="px-6 py-2.5 bg-[var(--accent)] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors rounded-lg mt-2">
                   Save Changes
                 </button>
               </div>

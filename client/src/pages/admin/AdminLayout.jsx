@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Package, ShoppingCart, Tag, Star, BarChart2, LogOut, Menu, X, RefreshCw, Truck } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Tag, Star, BarChart2, LogOut, Menu, X, RefreshCw, Truck, Palette } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useSettings } from '../../context/SettingsContext';
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
@@ -11,11 +12,13 @@ const NAV = [
   { to: '/admin/categories', label: 'Categories', icon: Tag },
   { to: '/admin/reviews', label: 'Reviews', icon: Star },
   { to: '/admin/refunds', label: 'Refunds', icon: RefreshCw },
+  { to: '/admin/settings', label: 'Appearance', icon: Palette },
 ];
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { logout, user } = useAuth();
+  const { brandName } = useSettings();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,20 +35,21 @@ export default function AdminLayout() {
         className="h-full bg-[#0f0f0f] border-r border-white/5 flex flex-col shrink-0 overflow-hidden"
       >
         <div className="p-4 flex items-center gap-3 border-b border-white/5 min-h-16">
-          <div className="w-8 h-8 shrink-0 rounded-full border border-[#C9A84C] flex items-center justify-center">
-            <span className="text-[#C9A84C] text-xs font-bold">LW</span>
+          <div className="w-8 h-8 shrink-0 rounded-full border border-[var(--accent)] flex items-center justify-center" style={{ background: 'rgb(var(--accent-rgb)/0.08)' }}>
+            <span className="text-[var(--accent)] text-xs font-bold">{(brandName || 'Sparkle Time').trim().split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase()}</span>
           </div>
           {sidebarOpen && (
-            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-light tracking-widest uppercase text-white whitespace-nowrap">
-              Admin Panel
-            </motion.span>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-w-0">
+              <p className="font-script text-xl leading-none truncate" style={{ color: 'var(--accent)' }}>{brandName}</p>
+              <p className="text-[9px] tracking-[0.3em] uppercase text-white/35 mt-0.5">Admin Panel</p>
+            </motion.div>
           )}
         </div>
 
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {NAV.map(({ to, label, icon: Icon, exact }) => (
             <Link key={to} to={to}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group ${isActive(to, exact) ? 'bg-[#C9A84C]/10 text-[#C9A84C]' : 'text-white/40 hover:text-white hover:bg-white/5'}`}>
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group ${isActive(to, exact) ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-white/40 hover:text-white hover:bg-white/5'}`}>
               <Icon size={18} className="shrink-0" />
               {sidebarOpen && <span className="text-sm whitespace-nowrap">{label}</span>}
             </Link>
@@ -55,7 +59,7 @@ export default function AdminLayout() {
         <div className="p-3 border-t border-white/5">
           {sidebarOpen && (
             <div className="flex items-center gap-2 px-3 py-2 mb-2">
-              <div className="w-7 h-7 rounded-full bg-[#C9A84C]/10 flex items-center justify-center text-[#C9A84C] text-xs font-bold">
+              <div className="w-7 h-7 rounded-full bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)] text-xs font-bold">
                 {user?.name?.[0]}
               </div>
               <div className="flex-1 min-w-0">
@@ -80,7 +84,7 @@ export default function AdminLayout() {
             <Menu size={20} />
           </button>
           <div className="flex-1" />
-          <Link to="/" className="text-xs text-white/30 hover:text-[#C9A84C] tracking-widest uppercase transition-colors">
+          <Link to="/" className="text-xs text-white/30 hover:text-[var(--accent)] tracking-widest uppercase transition-colors">
             View Site →
           </Link>
         </header>

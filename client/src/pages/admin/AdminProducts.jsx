@@ -70,7 +70,7 @@ export default function AdminProducts() {
           <h1 className="text-2xl font-light text-white">Products</h1>
           <p className="text-white/30 text-sm">{total} total products</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2.5 bg-[#C9A84C] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[#E8C97A] transition-colors rounded-lg">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors rounded-lg">
           <Plus size={16} /> Add Product
         </button>
       </div>
@@ -79,7 +79,7 @@ export default function AdminProducts() {
       <div className="relative mb-4">
         <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
         <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Search products..."
-          className="w-full max-w-sm bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white outline-none focus:border-[#C9A84C] placeholder-white/20" />
+          className="w-full max-w-sm bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white outline-none focus:border-[var(--accent)] placeholder-white/20" />
       </div>
 
       {/* Table */}
@@ -114,20 +114,20 @@ export default function AdminProducts() {
                   </div>
                 </td>
                 <td className="px-4 py-3 text-white/50 text-xs">{p.category?.name}</td>
-                <td className="px-4 py-3 text-[#C9A84C] font-medium">₹{p.price?.toLocaleString()}</td>
+                <td className="px-4 py-3 text-[var(--accent)] font-medium">₹{p.price?.toLocaleString()}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs ${p.stock > 5 ? 'text-green-400' : p.stock > 0 ? 'text-yellow-400' : 'text-red-400'}`}>{p.stock}</span>
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-1">
-                    {p.isFeatured && <span className="text-[9px] px-1.5 py-0.5 bg-[#C9A84C]/20 text-[#C9A84C] rounded">Featured</span>}
+                    {p.isFeatured && <span className="text-[9px] px-1.5 py-0.5 bg-[var(--accent)]/20 text-[var(--accent)] rounded">Featured</span>}
                     {p.isNewArrival && <span className="text-[9px] px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded">New</span>}
                     {!p.isActive && <span className="text-[9px] px-1.5 py-0.5 bg-red-500/20 text-red-400 rounded">Hidden</span>}
                   </div>
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2 justify-end">
-                    <button onClick={() => openEdit(p)} className="text-white/30 hover:text-[#C9A84C] transition-colors"><Pencil size={15} /></button>
+                    <button onClick={() => openEdit(p)} className="text-white/30 hover:text-[var(--accent)] transition-colors"><Pencil size={15} /></button>
                     <button onClick={() => handleDelete(p._id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={15} /></button>
                   </div>
                 </td>
@@ -142,7 +142,7 @@ export default function AdminProducts() {
         <div className="flex gap-2 mt-4 justify-center">
           {Array.from({ length: pages }).map((_, i) => (
             <button key={i} onClick={() => setPage(i + 1)}
-              className={`w-8 h-8 text-xs rounded transition-all ${page === i + 1 ? 'bg-[#C9A84C] text-black' : 'glass text-white/50 hover:text-[#C9A84C]'}`}>
+              className={`w-8 h-8 text-xs rounded transition-all ${page === i + 1 ? 'bg-[var(--accent)] text-black' : 'glass text-white/50 hover:text-[var(--accent)]'}`}>
               {i + 1}
             </button>
           ))}
@@ -181,7 +181,7 @@ export default function AdminProducts() {
                   <div key={key} className={col === 2 ? 'col-span-2' : ''}>
                     <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">{label}</label>
                     <input type={type} value={form[key] || ''} onChange={e => setField(key, e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C] placeholder-white/20" />
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)] placeholder-white/20" />
                   </div>
                 ))}
 
@@ -193,7 +193,7 @@ export default function AdminProducts() {
                   <div key={key}>
                     <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">{label}</label>
                     <select value={form[key]} onChange={e => setField(key, e.target.value)}
-                      className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C]">
+                      className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)]">
                       {options.map(o => <option key={o} value={o} className="bg-[#0f0f0f]">{o.charAt(0).toUpperCase() + o.slice(1)}</option>)}
                     </select>
                   </div>
@@ -202,7 +202,7 @@ export default function AdminProducts() {
                 <div>
                   <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">Category</label>
                   <select value={form.category || ''} onChange={e => setField('category', e.target.value)}
-                    className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C]">
+                    className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)]">
                     {categories.map(c => <option key={c._id} value={c._id} className="bg-[#0f0f0f]">{c.name}</option>)}
                   </select>
                 </div>
@@ -210,14 +210,14 @@ export default function AdminProducts() {
                 <div className="col-span-2">
                   <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">Image URL</label>
                   <input value={form.images?.[0]?.url || ''} onChange={e => setField('images', [{ url: e.target.value, alt: form.name }])}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C] placeholder-white/20"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)] placeholder-white/20"
                     placeholder="https://..." />
                 </div>
 
                 <div className="col-span-2">
                   <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">Description</label>
                   <textarea value={form.description || ''} onChange={e => setField('description', e.target.value)} rows={3}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C] resize-none" />
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)] resize-none" />
                 </div>
 
                 {/* Checkboxes */}
@@ -225,7 +225,7 @@ export default function AdminProducts() {
                   {[['isFeatured', 'Featured'], ['isNewArrival', 'New'], ['isBestseller', 'Bestseller'], ['isActive', 'Active']].map(([key, label]) => (
                     <label key={key} className="flex items-center gap-2 text-sm text-white/50 cursor-pointer">
                       <input type="checkbox" checked={!!form[key]} onChange={e => setField(key, e.target.checked)}
-                        className="rounded border-white/20 bg-transparent accent-[#C9A84C]" />
+                        className="rounded border-white/20 bg-transparent accent-[var(--accent)]" />
                       {label}
                     </label>
                   ))}
@@ -234,7 +234,7 @@ export default function AdminProducts() {
 
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={saving}
-                  className="flex-1 py-3 bg-[#C9A84C] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[#E8C97A] transition-colors disabled:opacity-50 rounded-lg">
+                  className="flex-1 py-3 bg-[var(--accent)] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors disabled:opacity-50 rounded-lg">
                   {saving ? 'Saving...' : editing ? 'Update Product' : 'Create Product'}
                 </button>
                 <button type="button" onClick={() => setModal(false)} className="px-6 glass rounded-lg text-white/50 hover:text-white transition-colors">

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { SettingsProvider } from './context/SettingsContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import CartDrawer from './components/layout/CartDrawer';
@@ -19,10 +20,11 @@ import AdminOrders from './pages/admin/AdminOrders';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminReviews from './pages/admin/AdminReviews';
 import AdminRefunds from './pages/admin/AdminRefunds';
+import AdminSettings from './pages/admin/AdminSettings';
 
 function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[#C9A84C] border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>;
   if (!user) return <Navigate to="/login" replace />;
   if (adminOnly && user.role !== 'admin') return <Navigate to="/" replace />;
   return children;
@@ -42,6 +44,7 @@ function UserLayout({ children }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <SettingsProvider>
       <AuthProvider>
         <CartProvider>
           <CustomCursor />
@@ -63,12 +66,14 @@ export default function App() {
               <Route path="categories" element={<AdminCategories />} />
               <Route path="reviews" element={<AdminReviews />} />
               <Route path="refunds" element={<AdminRefunds />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </CartProvider>
       </AuthProvider>
+      </SettingsProvider>
     </BrowserRouter>
   );
 }

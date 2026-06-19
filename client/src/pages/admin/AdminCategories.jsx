@@ -43,7 +43,7 @@ export default function AdminCategories() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-light text-white">Categories</h1>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2.5 bg-[#C9A84C] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[#E8C97A] transition-colors rounded-lg">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] text-black text-sm font-semibold tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors rounded-lg">
           <Plus size={16} /> Add Category
         </button>
       </div>
@@ -57,7 +57,7 @@ export default function AdminCategories() {
                 <p className="text-white/30 text-xs capitalize">{cat.gender} • /{cat.slug}</p>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => openEdit(cat)} className="text-white/30 hover:text-[#C9A84C] transition-colors"><Pencil size={14} /></button>
+                <button onClick={() => openEdit(cat)} className="text-white/30 hover:text-[var(--accent)] transition-colors"><Pencil size={14} /></button>
                 <button onClick={() => handleDelete(cat._id)} className="text-white/30 hover:text-red-400 transition-colors"><Trash2 size={14} /></button>
               </div>
             </div>
@@ -87,22 +87,22 @@ export default function AdminCategories() {
                 <div key={key}>
                   <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">{label}</label>
                   <input value={form[key] || ''} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C]" />
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)]" />
                 </div>
               ))}
               <div>
                 <label className="text-[10px] tracking-widest uppercase text-white/30 mb-1 block">Gender</label>
                 <select value={form.gender} onChange={e => setForm(f => ({ ...f, gender: e.target.value }))}
-                  className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#C9A84C]">
+                  className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[var(--accent)]">
                   {['men', 'women', 'unisex'].map(g => <option key={g} value={g} className="bg-[#0f0f0f] capitalize">{g.charAt(0).toUpperCase() + g.slice(1)}</option>)}
                 </select>
               </div>
               <label className="flex items-center gap-2 text-sm text-white/50 cursor-pointer">
-                <input type="checkbox" checked={!!form.isActive} onChange={e => setForm(f => ({ ...f, isActive: e.target.checked }))} className="accent-[#C9A84C]" />
+                <input type="checkbox" checked={!!form.isActive} onChange={e => setForm(f => ({ ...f, isActive: e.target.checked }))} className="accent-[var(--accent)]" />
                 Active
               </label>
               <button type="submit" disabled={saving}
-                className="w-full py-3 bg-[#C9A84C] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[#E8C97A] transition-colors disabled:opacity-50 rounded-lg">
+                className="w-full py-3 bg-[var(--accent)] text-black font-semibold text-sm tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors disabled:opacity-50 rounded-lg">
                 {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
               </button>
             </motion.form>

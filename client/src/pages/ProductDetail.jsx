@@ -42,7 +42,7 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     addToCart(product, qty);
-    toast.success('Added to cart!', { style: { background: '#111', color: '#C9A84C', border: '1px solid #C9A84C33' } });
+    toast.success('Added to cart!', { style: { background: '#111', color: 'var(--accent)', border: '1px solid var(--accent)33' } });
   };
 
   const handleReview = async (e) => {
@@ -63,9 +63,9 @@ export default function ProductDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-white/30 mb-8 tracking-widest uppercase">
-          <Link to="/" className="hover:text-[#C9A84C] transition-colors">Home</Link>
+          <Link to="/" className="hover:text-[var(--accent)] transition-colors">Home</Link>
           <span>/</span>
-          <Link to="/shop" className="hover:text-[#C9A84C] transition-colors">Shop</Link>
+          <Link to="/shop" className="hover:text-[var(--accent)] transition-colors">Shop</Link>
           <span>/</span>
           <span className="text-white/60">{product.name}</span>
         </nav>
@@ -88,11 +88,11 @@ export default function ProductDetail() {
               {product.images?.length > 1 && (
                 <>
                   <button onClick={() => setActiveImg(i => (i - 1 + product.images.length) % product.images.length)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 glass rounded-full flex items-center justify-center hover:bg-[#C9A84C] hover:text-black transition-all">
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 glass rounded-full flex items-center justify-center hover:bg-[var(--accent)] hover:text-black transition-all">
                     <ChevronLeft size={16} />
                   </button>
                   <button onClick={() => setActiveImg(i => (i + 1) % product.images.length)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 glass rounded-full flex items-center justify-center hover:bg-[#C9A84C] hover:text-black transition-all">
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 glass rounded-full flex items-center justify-center hover:bg-[var(--accent)] hover:text-black transition-all">
                     <ChevronRight size={16} />
                   </button>
                 </>
@@ -105,7 +105,7 @@ export default function ProductDetail() {
               <div className="flex gap-2 overflow-x-auto pb-1">
                 {product.images.map((img, i) => (
                   <button key={i} onClick={() => setActiveImg(i)}
-                    className={`shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9A84C]' : 'border-transparent'}`}>
+                    className={`shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[var(--accent)]' : 'border-transparent'}`}>
                     <img src={img.url} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -115,15 +115,15 @@ export default function ProductDetail() {
 
           {/* Info */}
           <div>
-            <p className="text-xs tracking-widest uppercase text-[#C9A84C] mb-2">{product.brand}</p>
+            <p className="text-xs tracking-widest uppercase text-[var(--accent)] mb-2">{product.brand}</p>
             <h1 className="text-3xl font-light text-white mb-3">{product.name}</h1>
 
             <div className="flex items-center gap-3 mb-5">
               <div className="flex gap-1">
-                {[1,2,3,4,5].map(s => <Star key={s} size={14} className={s <= product.rating ? 'fill-[#C9A84C] text-[#C9A84C]' : 'text-white/20'} />)}
+                {[1,2,3,4,5].map(s => <Star key={s} size={14} className={s <= product.rating ? 'fill-[var(--accent)] text-[var(--accent)]' : 'text-white/20'} />)}
               </div>
               <span className="text-white/40 text-sm">({product.numReviews} reviews)</span>
-              {product.isBestseller && <span className="text-xs px-2 py-0.5 bg-[#C9A84C]/10 text-[#C9A84C] border border-[#C9A84C]/30 rounded-full">Best Seller</span>}
+              {product.isBestseller && <span className="text-xs px-2 py-0.5 bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30 rounded-full">Best Seller</span>}
             </div>
 
             <div className="flex items-baseline gap-3 mb-6">
@@ -140,7 +140,7 @@ export default function ProductDetail() {
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">Color</p>
                 <div className="flex gap-2">
                   {product.colors.map(c => (
-                    <button key={c.name} title={c.name} className="w-6 h-6 rounded-full border-2 border-white/20 hover:border-[#C9A84C] transition-colors"
+                    <button key={c.name} title={c.name} className="w-6 h-6 rounded-full border-2 border-white/20 hover:border-[var(--accent)] transition-colors"
                       style={{ backgroundColor: c.hex }} />
                   ))}
                 </div>
@@ -151,9 +151,9 @@ export default function ProductDetail() {
             <div className="flex items-center gap-4 mb-6">
               <p className="text-xs tracking-widest uppercase text-white/40">Quantity</p>
               <div className="flex items-center gap-3 glass rounded-lg px-3 py-2">
-                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="text-white/50 hover:text-[#C9A84C] transition-colors"><Minus size={14} /></button>
+                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="text-white/50 hover:text-[var(--accent)] transition-colors"><Minus size={14} /></button>
                 <span className="text-white w-6 text-center">{qty}</span>
-                <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="text-white/50 hover:text-[#C9A84C] transition-colors"><Plus size={14} /></button>
+                <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="text-white/50 hover:text-[var(--accent)] transition-colors"><Plus size={14} /></button>
               </div>
               <span className="text-xs text-white/30">{product.stock} in stock</span>
             </div>
@@ -161,14 +161,14 @@ export default function ProductDetail() {
             {/* Buttons */}
             <div className="flex gap-3 mb-8">
               <button onClick={handleAddToCart} disabled={product.stock === 0}
-                className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#C9A84C] text-black font-semibold tracking-widest uppercase text-sm hover:bg-[#E8C97A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="flex-1 flex items-center justify-center gap-2 py-4 bg-[var(--accent)] text-black font-semibold tracking-widest uppercase text-sm hover:bg-[var(--accent-2)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                 <ShoppingBag size={16} />
                 {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
               </button>
-              <button className="px-4 glass rounded hover:border-[#C9A84C]/30 hover:text-[#C9A84C] transition-all">
+              <button className="px-4 glass rounded hover:border-[var(--accent)]/30 hover:text-[var(--accent)] transition-all">
                 <Heart size={18} />
               </button>
-              <button className="px-4 glass rounded hover:border-[#C9A84C]/30 hover:text-[#C9A84C] transition-all">
+              <button className="px-4 glass rounded hover:border-[var(--accent)]/30 hover:text-[var(--accent)] transition-all">
                 <Share2 size={18} />
               </button>
             </div>
@@ -181,7 +181,7 @@ export default function ProductDetail() {
                 { icon: RefreshCw, label: '7-Day Returns' },
               ].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex flex-col items-center gap-1 text-center">
-                  <Icon size={16} className="text-[#C9A84C]" />
+                  <Icon size={16} className="text-[var(--accent)]" />
                   <span className="text-[10px] tracking-wide text-white/50">{label}</span>
                 </div>
               ))}
@@ -194,7 +194,7 @@ export default function ProductDetail() {
           <div className="flex border-b border-white/5 gap-8 mb-8">
             {['description', 'specifications', 'reviews'].map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`text-xs tracking-widest uppercase pb-4 border-b-2 transition-all ${activeTab === tab ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-transparent text-white/30 hover:text-white/70'}`}>
+                className={`text-xs tracking-widest uppercase pb-4 border-b-2 transition-all ${activeTab === tab ? 'border-[var(--accent)] text-[var(--accent)]' : 'border-transparent text-white/30 hover:text-white/70'}`}>
                 {tab} {tab === 'reviews' && `(${product.numReviews})`}
               </button>
             ))}
@@ -207,7 +207,7 @@ export default function ProductDetail() {
                   <p>{product.description}</p>
                   {product.features?.length > 0 && (
                     <ul className="mt-4 space-y-2">
-                      {product.features.map(f => <li key={f} className="flex items-center gap-2"><span className="text-[#C9A84C]">→</span>{f}</li>)}
+                      {product.features.map(f => <li key={f} className="flex items-center gap-2"><span className="text-[var(--accent)]">→</span>{f}</li>)}
                     </ul>
                   )}
                 </div>
@@ -230,7 +230,7 @@ export default function ProductDetail() {
                       <div className="flex items-center justify-between mb-2">
                         <div>
                           <p className="text-white font-medium text-sm">{r.name}</p>
-                          <div className="flex gap-0.5 mt-1">{[1,2,3,4,5].map(s => <Star key={s} size={10} className={s <= r.rating ? 'fill-[#C9A84C] text-[#C9A84C]' : 'text-white/20'} />)}</div>
+                          <div className="flex gap-0.5 mt-1">{[1,2,3,4,5].map(s => <Star key={s} size={10} className={s <= r.rating ? 'fill-[var(--accent)] text-[var(--accent)]' : 'text-white/20'} />)}</div>
                         </div>
                         <span className="text-xs text-white/20">{new Date(r.createdAt).toLocaleDateString()}</span>
                       </div>
@@ -243,14 +243,14 @@ export default function ProductDetail() {
                       <div className="flex gap-1">
                         {[1,2,3,4,5].map(s => (
                           <button type="button" key={s} onClick={() => setReview(r => ({ ...r, rating: s }))}>
-                            <Star size={20} className={s <= review.rating ? 'fill-[#C9A84C] text-[#C9A84C]' : 'text-white/20 hover:text-[#C9A84C]'} />
+                            <Star size={20} className={s <= review.rating ? 'fill-[var(--accent)] text-[var(--accent)]' : 'text-white/20 hover:text-[var(--accent)]'} />
                           </button>
                         ))}
                       </div>
                       <textarea value={review.comment} onChange={e => setReview(r => ({ ...r, comment: e.target.value }))} required
                         placeholder="Share your experience..." rows={3}
-                        className="w-full bg-transparent border border-white/10 rounded p-3 text-sm text-white/70 outline-none focus:border-[#C9A84C] placeholder-white/20 resize-none" />
-                      <button type="submit" className="px-6 py-2.5 bg-[#C9A84C] text-black text-xs font-semibold tracking-widest uppercase hover:bg-[#E8C97A] transition-colors">
+                        className="w-full bg-transparent border border-white/10 rounded p-3 text-sm text-white/70 outline-none focus:border-[var(--accent)] placeholder-white/20 resize-none" />
+                      <button type="submit" className="px-6 py-2.5 bg-[var(--accent)] text-black text-xs font-semibold tracking-widest uppercase hover:bg-[var(--accent-2)] transition-colors">
                         Submit Review
                       </button>
                     </form>
