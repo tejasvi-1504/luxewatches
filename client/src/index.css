@@ -8,14 +8,14 @@
    ============================================================ */
 :root,
 [data-theme="rose"] {
-  --bg: #090608;
-  --accent: #E68BA3;          --accent-rgb: 230 139 163;
-  --accent-2: #F4B8C8;
-  --accent-bright: #F29FB6;
-  --accent-glow: #FFD9E4;
-  --accent-deep: #8E5366;
-  --accent-soft: #FBE6EC;
-  --ink: #F2E8EB;             --ink-rgb: 242 232 235;
+  --bg: #0A0709;
+  --accent: #F3AEC8;          --accent-rgb: 243 174 200;  /* baby pink */
+  --accent-2: #FBD7E4;
+  --accent-bright: #F8C0D6;
+  --accent-glow: #FFEAF2;
+  --accent-deep: #B07087;
+  --accent-soft: #FDEDF3;
+  --ink: #F6EDF0;             --ink-rgb: 246 237 240;
 }
 [data-theme="gold"] {
   --bg: #080604;
@@ -84,15 +84,47 @@
   /* Cursive signature script — used for the brand wordmark & flourishes */
   .font-script { font-family: 'Pinyon Script', 'Great Vibes', cursive; }
 
-  /* Brand wordmark — cursive accent on the dark theme */
+  /* Brand wordmark — cursive accent that gently sparkles */
   .brand-script {
     font-family: 'Pinyon Script', cursive;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 50%, var(--accent) 100%);
+    background: linear-gradient(110deg, var(--accent) 0%, var(--accent-glow) 50%, var(--accent) 100%);
+    background-size: 220% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1.1;
+    animation: sparkle-sweep 8s linear infinite;
   }
+
+  /* Sparkling shimmer text — light baby-pink shine sweeping across */
+  .sparkle-text {
+    background: linear-gradient(110deg,
+      var(--accent) 0%, var(--accent-bright) 28%,
+      #ffffff 47%, var(--accent-glow) 56%,
+      var(--accent-bright) 74%, var(--accent) 100%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation: sparkle-sweep 7s ease-in-out infinite;
+  }
+
+  /* Small twinkling sparkle glyphs (✦) */
+  .twinkle { animation: twinkle 2.8s ease-in-out infinite; }
+}
+
+@keyframes sparkle-sweep {
+  0% { background-position: 0% center; }
+  100% { background-position: -220% center; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.75); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@layer utilities {
+  /* (continued) */
 
   /* Gold text gradients */
   .gold-text {

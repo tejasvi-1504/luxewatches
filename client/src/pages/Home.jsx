@@ -130,7 +130,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="overflow-hidden" style={{ background: '#080604' }}>
+    <div className="overflow-hidden" style={{ background: '#0a0709' }}>
 
       {/* ── HERO ── */}
       <section ref={heroRef} className="relative h-screen min-h-[640px] flex items-center overflow-hidden">
@@ -149,26 +149,15 @@ export default function Home() {
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(105deg, rgba(8,6,4,0.88) 0%, rgba(8,6,4,0.55) 55%, rgba(8,6,4,0.2) 100%)' }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #080604 0%, transparent 30%, transparent 80%, #080604 100%)' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0709 0%, transparent 30%, transparent 80%, #0a0709 100%)' }} />
           </motion.div>
         </AnimatePresence>
 
-        {/* Animated grid lines */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
-          {[12, 32, 52, 72, 88].map((top, i) => (
-            <motion.div key={i} className="absolute h-px w-full"
-              style={{ top: `${top}%`, background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb)/0.18), transparent)' }}
-              animate={{ x: ['-100%', '100%'] }}
-              transition={{ duration: 16 + i * 3, repeat: Infinity, ease: 'linear', delay: i * 1.8 }}
-            />
-          ))}
-        </div>
-
-        {/* Glowing orb */}
-        <motion.div className="absolute right-[8%] top-[15%] w-[500px] h-[500px] rounded-full pointer-events-none hidden lg:block"
-          style={{ background: 'radial-gradient(circle, rgb(var(--accent-rgb)/0.07) 0%, transparent 70%)' }}
-          animate={{ scale: [1, 1.18, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        {/* Soft baby-pink glow — single, subtle */}
+        <motion.div className="absolute right-[10%] top-[18%] w-[420px] h-[420px] rounded-full pointer-events-none hidden lg:block"
+          style={{ background: 'radial-gradient(circle, rgb(var(--accent-rgb)/0.06) 0%, transparent 70%)' }}
+          animate={{ opacity: [0.4, 0.75, 0.4] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         {/* Hero content */}
@@ -181,6 +170,7 @@ export default function Home() {
             >
               {/* Tag */}
               <motion.div className="flex items-center gap-3 mb-7" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+                <span className="twinkle text-[11px]" style={{ color: 'var(--accent)' }}>✦</span>
                 <div className="h-px w-10" style={{ background: 'var(--accent)' }} />
                 <span className="text-[9px] tracking-[0.5em] uppercase" style={{ color: 'var(--accent)' }}>
                   {HERO_SLIDES[activeHero].tag}
@@ -202,7 +192,7 @@ export default function Home() {
                 <motion.h1
                   initial={{ y: 110 }} animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  className="font-cormorant leading-[0.9] tracking-tight gold-text"
+                  className="font-cormorant leading-[0.9] tracking-tight sparkle-text"
                   style={{ fontSize: 'clamp(64px, 10vw, 128px)', fontWeight: 600, fontStyle: 'italic' }}
                 >
                   {HERO_SLIDES[activeHero].sub}
@@ -282,9 +272,9 @@ export default function Home() {
       </section>
 
       {/* ── BRAND STRIP ── */}
-      <div className="py-4 overflow-hidden relative" style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
-        <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(90deg, #0d0a07, transparent)' }} />
-        <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(270deg, #0d0a07, transparent)' }} />
+      <div className="py-4 overflow-hidden relative" style={{ background: '#0f0c11', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
+        <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(90deg, #0f0c11, transparent)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(270deg, #0f0c11, transparent)' }} />
         <motion.div
           animate={{ x: ['0%', '-50%'] }}
           transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
@@ -366,7 +356,7 @@ export default function Home() {
       </section>
 
       {/* ── METRICS STRIP ── */}
-      <section style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.07)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.07)' }} className="py-10 sm:py-12">
+      <section style={{ background: '#0f0c11', borderTop: '1px solid rgb(var(--accent-rgb)/0.07)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.07)' }} className="py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-6">
             {METRICS.map(({ value, label }, i) => (
@@ -412,7 +402,7 @@ export default function Home() {
           alt="" className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.1 }}
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #080604 0%, rgba(8,6,4,0.65) 50%, #080604 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #0a0709 0%, rgba(8,6,4,0.65) 50%, #0a0709 100%)' }} />
 
         {/* Giant background word */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
@@ -425,7 +415,7 @@ export default function Home() {
             <div className="space-y-0 mb-8">
               {[['Precision', false], ['Crafted.', true], ['Affordably', false], ['Yours.', true]].map(([word, gold], i) => (
                 <AnimatedTitle key={word} delay={i * 0.1}
-                  className={`font-cormorant leading-[1.05] ${gold ? 'font-semibold gold-text-bright italic' : 'font-light text-white'}`}
+                  className={`font-cormorant leading-[1.05] ${gold ? 'font-semibold sparkle-text italic' : 'font-light text-white'}`}
                   style={{ fontSize: 'clamp(40px, 6vw, 80px)' }}>
                   {word}
                 </AnimatedTitle>
@@ -495,7 +485,7 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-20 sm:py-24" style={{ background: '#0d0a07', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
+      <section className="py-20 sm:py-24" style={{ background: '#0f0c11', borderTop: '1px solid rgb(var(--accent-rgb)/0.06)', borderBottom: '1px solid rgb(var(--accent-rgb)/0.06)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
             <SectionLabel>Customer Love</SectionLabel>
@@ -564,7 +554,7 @@ export default function Home() {
           alt="" className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.09 }}
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, #080604 0%, rgba(8,6,4,0.5) 50%, #080604 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, #0a0709 0%, rgba(8,6,4,0.5) 50%, #0a0709 100%)' }} />
 
         {/* Background type */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
@@ -589,7 +579,7 @@ export default function Home() {
             <motion.h2
               initial={{ y: 60 }} whileInView={{ y: 0 }} viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="font-cormorant font-semibold gold-text italic mb-8 leading-none"
+              className="font-cormorant font-semibold sparkle-text italic mb-8 leading-none"
               style={{ fontSize: 'clamp(48px, 7vw, 90px)' }}>
               Personal Style
             </motion.h2>
