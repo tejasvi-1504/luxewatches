@@ -135,23 +135,19 @@ export default function Home() {
       {/* ── HERO ── */}
       <section ref={heroRef} className="relative h-screen min-h-[640px] flex items-center overflow-hidden">
 
-        {/* Background slides */}
-        <AnimatePresence mode="wait">
-          <motion.div key={activeHero}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <motion.img style={{ y: heroY }}
-              src={HERO_SLIDES[activeHero].img} alt=""
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(105deg, rgba(8,6,4,0.88) 0%, rgba(8,6,4,0.55) 55%, rgba(8,6,4,0.2) 100%)' }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0709 0%, transparent 30%, transparent 80%, #0a0709 100%)' }} />
-          </motion.div>
-        </AnimatePresence>
+        {/* Background video — HD, gently blurred */}
+        <motion.div className="absolute inset-0" style={{ y: heroY }}>
+          <video
+            className="w-full h-full object-cover"
+            src="/hero.mp4"
+            autoPlay muted loop playsInline preload="auto"
+            poster="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1920&q=80"
+            style={{ filter: 'blur(5px) saturate(1.08)', transform: 'scale(1.1)' }}
+          />
+        </motion.div>
+        {/* Darkening overlays for legibility */}
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(10,7,9,0.5) 0%, rgba(10,7,9,0.86) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0709 0%, transparent 32%, transparent 74%, #0a0709 100%)' }} />
 
         {/* Soft baby-pink glow — single, subtle */}
         <motion.div className="absolute right-[10%] top-[18%] w-[420px] h-[420px] rounded-full pointer-events-none hidden lg:block"
@@ -161,15 +157,15 @@ export default function Home() {
         />
 
         {/* Hero content */}
-        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-16 sm:pt-0">
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-16 sm:pt-0 flex flex-col items-center text-center">
           <AnimatePresence mode="wait">
             <motion.div key={activeHero}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.65 }}
-              className="max-w-2xl"
+              className="max-w-3xl mx-auto flex flex-col items-center"
             >
               {/* Tag */}
-              <motion.div className="flex items-center gap-3 mb-7" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              <motion.div className="flex items-center justify-center gap-3 mb-7" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
                 <span className="twinkle text-[11px]" style={{ color: 'var(--accent)' }}>✦</span>
                 <div className="h-px w-10" style={{ background: 'var(--accent)' }} />
                 <span className="text-[9px] tracking-[0.5em] uppercase" style={{ color: 'var(--accent)' }}>
@@ -200,13 +196,13 @@ export default function Home() {
               </div>
 
               <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-                className="text-sm leading-relaxed mb-9 max-w-md"
+                className="text-sm leading-relaxed mb-9 max-w-md mx-auto"
                 style={{ color: 'rgb(var(--ink-rgb)/0.42)', lineHeight: 1.8 }}>
                 {HERO_SLIDES[activeHero].desc}
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75 }}
-                className="flex flex-wrap gap-3">
+                className="flex flex-wrap gap-3 justify-center">
                 <Link to={HERO_SLIDES[activeHero].cta}
                   className="group relative overflow-hidden flex items-center gap-2.5 px-8 py-3.5 text-black text-[10px] font-bold tracking-[0.22em] uppercase"
                   style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
@@ -227,7 +223,7 @@ export default function Home() {
 
           {/* Stats */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
-            className="flex gap-8 sm:gap-14 mt-14 sm:mt-20 pt-7 max-w-xs sm:max-w-md"
+            className="flex gap-10 sm:gap-16 mt-14 sm:mt-16 pt-7 justify-center"
             style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
             {[['50K+', 'Customers'], ['500+', 'Designs'], ['4.9★', 'Rating']].map(([v, l]) => (
               <div key={l}>
